@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pazz.springboot.mybatis.dao.LoginMapper">
+
+    <resultMap id="login" type="com.pazz.springboot.mybatis.entity.Login">
+        <id column="id" property="id" jdbcType="VARCHAR"></id>
+        <id column="create_user" property="createUser" jdbcType="VARCHAR"></id>
+        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"></id>
+        <id column="modify_user" property="modifyUser" jdbcType="VARCHAR"></id>
+        <id column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"></id>
+        <id column="user_name" property="userName" jdbcType="VARCHAR"></id>
+        <id column="pass_word" property="passWord" jdbcType="VARCHAR"></id>
+        <id column="rank" property="rank" jdbcType="NUMERIC"></id>
+        <id column="active" property="active" jdbcType="CHAR"></id>
+    </resultMap>
+
+    <select id="queryLoginList" resultMap="login">
+        select * from t_login
+    </select>
+
+</mapper>
