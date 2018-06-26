@@ -20,7 +20,7 @@ public class LoginController {
     @Autowired
     private ILoginService loginService;
 
-    @GetMapping("/queryLoginList")
+    @GetMapping("/query")
     @ResponseBody
     public List<Login> queryLoginList(){
         return loginService.queryLoginList();

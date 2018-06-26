@@ -1,12 +1,15 @@
 package com.pazz.springboot.mybatis.entity;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.pazz.springboot.mybatis.util.DateJsonSerializer;
 import lombok.Data;
+import org.apache.ibatis.type.Alias;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.Id;
 import javax.persistence.Table;
-import java.sql.Date;
+import java.util.Date;
 
 /**
  * @author: Peng Jian
@@ -22,6 +25,7 @@ public class Login {
     private String createUser;
     @DateTimeFormat(style = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
+//    @JsonSerialize(using = DateJsonSerializer.class)
     private Date createTime;
     private String modifyUser;
     private Date modifyTime;

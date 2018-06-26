@@ -7,14 +7,14 @@
 
     <resultMap id="login" type="com.pazz.springboot.mybatis.entity.Login">
         <id column="id" property="id" jdbcType="VARCHAR"></id>
-        <id column="create_user" property="createUser" jdbcType="VARCHAR"></id>
-        <id column="create_time" property="createTime" jdbcType="TIMESTAMP"></id>
-        <id column="modify_user" property="modifyUser" jdbcType="VARCHAR"></id>
-        <id column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"></id>
-        <id column="user_name" property="userName" jdbcType="VARCHAR"></id>
-        <id column="pass_word" property="passWord" jdbcType="VARCHAR"></id>
-        <id column="rank" property="rank" jdbcType="NUMERIC"></id>
-        <id column="active" property="active" jdbcType="CHAR"></id>
+        <result column="create_user" property="createUser" jdbcType="VARCHAR"></result>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
+        <result column="modify_user" property="modifyUser" jdbcType="VARCHAR"></result>
+        <result column="modify_time" property="modifyTime" jdbcType="TIMESTAMP"></result>
+        <result column="user_name" property="userName" jdbcType="VARCHAR"></result>
+        <result column="pass_word" property="passWord" jdbcType="VARCHAR"></result>
+        <result column="rank" property="rank" jdbcType="NUMERIC"></result>
+        <result column="active" property="active" jdbcType="CHAR"></result>
     </resultMap>
 
     <select id="queryLoginList" resultMap="login">

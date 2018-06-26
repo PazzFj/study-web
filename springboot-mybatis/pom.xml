@@ -27,6 +27,8 @@
         <lombok.version>1.16.20</lombok.version>
         <mybatis.plus.version>2.3</mybatis.plus.version>
         <mybatis.plus.springboot.version>1.0.5</mybatis.plus.springboot.version>
+        <fastjson.version>1.2.47</fastjson.version>
+        <druid.version>1.1.10</druid.version>
     </properties>
 
     <dependencies>
@@ -63,20 +65,45 @@
             <scope>provided</scope>
         </dependency>
         <!-- mybatis-plus -->
+        <!--<dependency>-->
+        <!--<groupId>com.baomidou</groupId>-->
+        <!--<artifactId>mybatis-plus</artifactId>-->
+        <!--<version>${mybatis.plus.version}</version>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+        <!--<groupId>com.baomidou</groupId>-->
+        <!--<artifactId>mybatisplus-spring-boot-starter</artifactId>-->
+        <!--<version>${mybatis.plus.springboot.version}</version>-->
+        <!--</dependency>-->
+
+        <!-- fast-json -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatis-plus</artifactId>
-            <version>${mybatis.plus.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>fastjson</artifactId>
+            <version>${fastjson.version}</version>
         </dependency>
+        <!-- druid -->
         <dependency>
-            <groupId>com.baomidou</groupId>
-            <artifactId>mybatisplus-spring-boot-starter</artifactId>
-            <version>${mybatis.plus.springboot.version}</version>
+            <groupId>com.alibaba</groupId>
+            <artifactId>druid</artifactId>
+            <version>${druid.version}</version>
         </dependency>
+
 
     </dependencies>
 
     <build>
+        <resources>
+            <resource>
+                <directory>src/main/java</directory>
+                <includes>
+                    <include>**/*.xml</include>
+                </includes>
+            </resource>
+            <resource>
+                <directory>src/main/resources</directory>
+            </resource>
+        </resources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
