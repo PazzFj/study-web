@@ -20,7 +20,8 @@ public class LoginService implements ILoginService {
     private LoginMapper loginDao;
 
     @Override
-    public List<Login> queryLoginList() {
+    public List<Login> queryLoginList(Login login) {
+        System.out.println(login.getUserName());
         List<Login> loginList = loginDao.queryLoginList();
         return loginList;
     }

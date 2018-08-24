@@ -4,6 +4,7 @@ import com.pazz.springboot.mybatis.entity.Login;
 import com.pazz.springboot.mybatis.serivce.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -20,10 +21,10 @@ public class LoginController {
     @Autowired
     private ILoginService loginService;
 
-    @GetMapping("/query")
     @ResponseBody
-    public List<Login> queryLoginList(){
-        return loginService.queryLoginList();
+    @GetMapping("/query")
+    public List<Login> queryLoginList(@RequestBody Login login){
+        return loginService.queryLoginList(login);
     }
 
 }

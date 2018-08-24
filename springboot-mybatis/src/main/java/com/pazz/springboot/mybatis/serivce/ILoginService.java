@@ -11,6 +11,6 @@ import java.util.List;
  */
 public interface ILoginService {
 
-    List<Login> queryLoginList();
+    List<Login> queryLoginList(Login login);
 
 }

@@ -7,7 +7,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 @SpringBootApplication
 @MapperScan("com.pazz.springboot.mybatis.dao")
 public class SpringbootMybatisApplication {
-
     public static void main(String[] args) {
         SpringApplication.run(SpringbootMybatisApplication.class, args);
     }
