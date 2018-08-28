@@ -1,6 +1,6 @@
 package com.pazz.springbootweb.controller;
 
-import com.pazz.springbootweb.properties.TestProperties;
+import com.pazz.springbootweb.bean.TestBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -14,13 +14,16 @@ import org.springframework.web.bind.annotation.RestController;
 @RestController
 public class TestController {
 
+//    @Autowired
+//    private TestProperties testProperties;
     @Autowired
-    private TestProperties testProperties;
+    private TestBean testBean;
 
     @ResponseBody
     @GetMapping("/test")
     public String test(){
-        return testProperties.getName();
+//        return testProperties.getName();
+        return testBean.getName();
     }
 
 }
