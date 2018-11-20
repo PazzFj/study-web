@@ -1,4 +1,4 @@
-package com.pazz.springbootweb.properties;
+package com.pazz.springboot.web.properties;
 
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
  * @description:
  */
 @Component
-@ConfigurationProperties(prefix = "framework")
+@ConfigurationProperties(prefix = "framework.test")
 public class TestProperties {
 
     private String name;

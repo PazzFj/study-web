@@ -1,4 +1,4 @@
-package com.pazz.springbootweb;
+package com.pazz.springboot.web;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -11,6 +11,7 @@ public class SpringBootWebApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		
 	}
 
 }

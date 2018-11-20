@@ -9,12 +9,12 @@ import java.util.List;
 /**
  * @author: Peng Jian
  * @date: 2018/6/22 11:36
- * @description: LoginDao
+ * @description: LoginMapper
  */
 @Repository
 public interface LoginMapper {
 
-//    @Select("select * from t_login limit 0, 1")
+    /*@Select("select * from t_login limit 0, 1")*/
     List<Login> queryLoginList();
 
 }

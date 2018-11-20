@@ -1,4 +1,4 @@
-package com.pazz.springbootweb.bean;
+package com.pazz.springboot.web.bean;
 
 /**
  * @author: 彭坚
