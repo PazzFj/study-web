@@ -10,7 +10,8 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>springboot-web</module>
+        <module>springboot-configuration</module>
+        <module>springboot-mybatis</module>
     </modules>
 
     <properties>
