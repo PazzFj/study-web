@@ -1,6 +1,0 @@
-# Auto Configure
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.pazz.springboot.web.configuration.TestConfiguration,\
-com.pazz.springboot.web.configuration.WebMvcConfiguration
-org.springframework.boot.env.EnvironmentPostProcessor=\
-com.pazz.springboot.web.environment.TestEnvironment
