@@ -12,6 +12,8 @@
     <modules>
         <module>springboot-configuration</module>
         <module>springboot-mybatis</module>
+        <module>springboot-exception-handler</module>
+        <module>springboot-tomcat</module>
     </modules>
 
     <properties>
