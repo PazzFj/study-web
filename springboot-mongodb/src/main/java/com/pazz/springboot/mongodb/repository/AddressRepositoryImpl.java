@@ -1,7 +1,13 @@
 package com.pazz.springboot.mongodb.repository;
 
+import com.mongodb.client.MongoCursor;
+import com.pazz.springboot.mongodb.core.MongoLogSender;
 import com.pazz.springboot.mongodb.entity.Address;
 import com.pazz.springboot.mongodb.entity.LogInfo;
+import org.bson.BsonDocument;
+import org.bson.BsonString;
+import org.bson.Document;
+import org.bson.conversions.Bson;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Example;
 import org.springframework.data.domain.Page;
@@ -9,7 +15,10 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Component;
+import org.springframework.web.bind.annotation.Mapping;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -18,20 +27,45 @@ import java.util.Optional;
  * @create: 2018/11/26 16:04
  * @description:
  */
+@Component
 public class AddressRepositoryImpl implements AddressRepository, MongoRepository<Address, String> {
+
+    @Autowired
+    private MongoLogSender mongoLogSender;
+
+    @Autowired
+    private MongoTemplate mongoTemplate;
+
+    private String collectionName = Address.class.getName();
 
     @Override
     public List<Address> findAddressesByProvince(String province) {
-        return null;
+        List<Address> addresses = new ArrayList<>();
+        Bson bson = new BsonDocument("province", new BsonString(province));
+        MongoCursor cursor = mongoTemplate.getCollection(collectionName).find(bson, Address.class).iterator();
+        while (cursor.hasNext()) {
+            addresses.add((Address) cursor.next());
+        }
+        return addresses;
     }
 
     @Override
     public List<Address> findAddressesByProvinceAndCityAndDistrict(String province, String city, String district) {
-        return null;
+        List<Address> addresses = new ArrayList<>();
+        Bson bson = new BsonDocument("province", new BsonString(province));
+        ((BsonDocument) bson).put("city", new BsonString(city));
+        ((BsonDocument) bson).put("district", new BsonString(district));
+        MongoCursor cursor = mongoTemplate.getCollection(collectionName).find(bson, Address.class).iterator();
+        while (cursor.hasNext()) {
+            addresses.add((Address) cursor.next());
+        }
+        return addresses;
     }
 
     @Override
     public <S extends Address> S save(S s) {
+        Document document = MongoLogSender.getDocument(s);
+        mongoTemplate.getCollection(collectionName).insertOne(document);
         return null;
     }
 

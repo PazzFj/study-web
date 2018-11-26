@@ -19,7 +19,7 @@ public interface AddressService {
      * @return
      */
     @Query(fields = "{'province': 0}")
-    List<Address> findAddressesByProvince(String province);
+    String findAddressesByProvince(String province);
 
     /**
      * 根据省和省，拿地址列表.

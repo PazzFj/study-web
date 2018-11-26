@@ -41,4 +41,15 @@ public class Address {
         this.district = district;
         this.status = status;
     }
+
+    @Override
+    public String toString() {
+        return "Address{" +
+                "id='" + id + '\'' +
+                ", province='" + province + '\'' +
+                ", city='" + city + '\'' +
+                ", district='" + district + '\'' +
+                ", status=" + status +
+                '}';
+    }
 }

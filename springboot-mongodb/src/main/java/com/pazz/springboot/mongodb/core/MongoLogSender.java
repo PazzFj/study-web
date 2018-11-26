@@ -1,16 +1,21 @@
 package com.pazz.springboot.mongodb.core;
 
-import com.mongodb.BasicDBObject;
-import com.mongodb.DBObject;
 import com.pazz.springboot.mongodb.entity.LogInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.bson.Document;
 import org.springframework.beans.factory.DisposableBean;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.mongodb.core.MongoTemplate;
+import org.springframework.data.mongodb.core.index.Index;
+import org.springframework.data.mongodb.core.index.IndexInfo;
+import org.springframework.stereotype.Component;
 
-import java.beans.IntrospectionException;
 import java.beans.PropertyDescriptor;
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Vector;
 import java.util.concurrent.ArrayBlockingQueue;
@@ -23,8 +28,14 @@ import java.util.concurrent.TimeUnit;
  * @create: 2018/11/26 16:52
  * @description:
  */
+@Component
 public class MongoLogSender implements InitializingBean, DisposableBean {
 
+    public static final Log log = LogFactory.getLog(MongoLogSender.class);
+    /**
+     * 集合名称
+     */
+    private String collectionName = DEFAULT_COLLECTION_NAME;
     /**
      * 默认集合名称
      */
@@ -38,6 +49,14 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
      */
     public final static String DEFAULT_COLLECTION_TTL_INDEX_KEY = "date";
     /**
+     * 请求ID索引KEY
+     */
+    private String collectionRequestIdIndexKey = "requestId";
+    /**
+     * 请求ID索引名称
+     */
+    private String collectionRequestIdIndexName = "index_requestId_";
+    /**
      * 默认15天
      */
     public final static int DEFAULT_COLLECTION_TTL_INDEX_EXPIRE_SECONDS = 60 * 60 * 24 * 15;
@@ -47,9 +66,13 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
      */
     private int collectionTTLIndexExpireSeconds = DEFAULT_COLLECTION_TTL_INDEX_EXPIRE_SECONDS;
     /**
-     * 集合名称
+     * TTL索引name
      */
-    private String collectionName = DEFAULT_COLLECTION_NAME;
+    private String collectionTTLIndexName = DEFAULT_COLLECTION_TTL_INDEX_NAME;
+    /**
+     * TTL索引key
+     */
+    private String collectionTTLIndexKey = DEFAULT_COLLECTION_TTL_INDEX_KEY;
     /**
      * MongoTemplate
      */
@@ -63,7 +86,9 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
      */
     private int threadSize = 5;
 
-
+    /**
+     * 初始化(构造器)
+     */
     public MongoLogSender(MongoTemplate mongoTemplate) {
         this.mongoTemplate = mongoTemplate;
     }
@@ -72,14 +97,16 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
      * 批量发送日志
      */
     public void send(List<Object> msg) {
-
+        threadPool.submit(new SendTask(msg));
     }
 
     /**
      * 发送日志
      */
     public void send(Object msg) {
-
+        List<Object> lists = new ArrayList<>();
+        lists.add(msg);
+        threadPool.submit(new SendTask(lists));
     }
 
     @Override
@@ -96,10 +123,45 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
         }
     }
 
+    /**
+     * after
+     */
     @Override
     public void afterPropertiesSet() throws Exception {
+        //创建索引
+        createIndex();
         threadPool = new ThreadPoolExecutor(threadSize, threadSize, 3, TimeUnit.SECONDS,
                 new ArrayBlockingQueue<Runnable>(5 * threadSize), new ThreadPoolExecutor.AbortPolicy());
+    }
+
+    /**
+     * 创建索引
+     */
+    private void createIndex() {
+        try {
+            List<IndexInfo> infoList = mongoTemplate.indexOps(collectionName).getIndexInfo();
+            if (!existIndex(infoList, collectionTTLIndexName)) {
+                //创建TTL索引
+                mongoTemplate.indexOps(collectionName).ensureIndex(new Index().named(collectionTTLIndexName).on(collectionTTLIndexKey, Sort.Direction.DESC).expire(collectionTTLIndexExpireSeconds));
+            }
+            if (!existIndex(infoList, collectionRequestIdIndexName)) {
+                //创建requestId索引
+                mongoTemplate.indexOps(collectionName).ensureIndex(new Index(collectionRequestIdIndexKey, Sort.Direction.ASC).named(collectionRequestIdIndexName));
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+    }
+
+    private boolean existIndex(List<IndexInfo> infoList, String collectionName) {
+        return infoList.stream().anyMatch(indexInfo -> isEquals(collectionName, indexInfo.getName()));
+    }
+
+    public static boolean isEquals(String str1, String str2) {
+        if (str1 == null) {
+            return str2 == null;
+        }
+        return str1.equals(str2);
     }
 
     private class SendTask implements Runnable {
@@ -111,24 +173,24 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
 
         @Override
         public void run() {
-            List<DBObject> list = new Vector<>();
+            List<Document> list = new Vector<>();
             for (Object obj : msg) {
                 LogInfo log = (LogInfo) obj;
-                list.add(getDBObject(log));
+                list.add(getDocument(log));
             }
             mongoTemplate.getCollection(collectionName).insertMany(list);
         }
     }
 
-    public DBObject getDBObject(LogInfo logInfo) {
-        DBObject obj = new BasicDBObject();
-        Field[] fields = logInfo.getClass().getDeclaredFields();
+    public static Document getDocument(Object object) {
+        Document obj = new Document();
+        Field[] fields = object.getClass().getDeclaredFields();
         PropertyDescriptor pd = null;
         for (int i = 0; i < fields.length; i++) {
             try {
-                pd = new PropertyDescriptor(fields[i].getName(), logInfo.getClass());
+                pd = new PropertyDescriptor(fields[i].getName(), object.getClass());
                 Method m = pd.getReadMethod();
-                obj.put(fields[i].getName(), m.invoke(logInfo));
+                obj.put(fields[i].getName(), m.invoke(object));
             } catch (Exception e) {
                 continue;
             }
@@ -136,4 +198,35 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
         return obj;
     }
 
+    public String getCollectionName() {
+        return collectionName;
+    }
+
+    public void setCollectionName(String collectionName) {
+        this.collectionName = collectionName;
+    }
+
+    public int getThreadSize() {
+        return threadSize;
+    }
+
+    public void setThreadSize(int threadSize) {
+        this.threadSize = threadSize;
+    }
+
+    public String getCollectionTTLIndexName() {
+        return collectionTTLIndexName;
+    }
+
+    public void setCollectionTTLIndexName(String collectionTTLIndexName) {
+        this.collectionTTLIndexName = collectionTTLIndexName;
+    }
+
+    public int getCollectionTTLIndexExpireSeconds() {
+        return collectionTTLIndexExpireSeconds;
+    }
+
+    public void setCollectionTTLIndexExpireSeconds(int collectionTTLIndexExpireSeconds) {
+        this.collectionTTLIndexExpireSeconds = collectionTTLIndexExpireSeconds;
+    }
 }
