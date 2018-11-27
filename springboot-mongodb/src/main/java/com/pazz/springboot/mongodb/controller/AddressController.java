@@ -1,6 +1,6 @@
 package com.pazz.springboot.mongodb.controller;
 
-import com.pazz.springboot.mongodb.service.AddressService;
+import com.pazz.springboot.mongodb.service.IAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,11 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 public class AddressController {
 
     @Autowired
-    private AddressService addressService;
+    private IAddressService IAddressService;
 
     @GetMapping("/findProvince")
     public String findProvince(String province) {
-        return addressService.findAddressesByProvince(province);
+        return IAddressService.findAddressesByProvince(province);
     }
 
 

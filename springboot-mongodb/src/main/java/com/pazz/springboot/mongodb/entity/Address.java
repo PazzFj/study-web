@@ -1,6 +1,8 @@
 package com.pazz.springboot.mongodb.entity;
 
 import lombok.Data;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
  * @author: 彭坚
@@ -8,12 +10,18 @@ import lombok.Data;
  * @description:
  */
 @Data
+@Document(collection = "Address")
 public class Address {
 
     /**
+     * id.
+     */
+    @Id
+    private String id;
+    /**
      * 编号.
      */
-    private String id;
+    private String number;
     /**
      * 省.
      */

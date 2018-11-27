@@ -198,6 +198,10 @@ public class MongoLogSender implements InitializingBean, DisposableBean {
         return obj;
     }
 
+    public MongoTemplate getMongoTemplate(){
+        return mongoTemplate;
+    }
+
     public String getCollectionName() {
         return collectionName;
     }

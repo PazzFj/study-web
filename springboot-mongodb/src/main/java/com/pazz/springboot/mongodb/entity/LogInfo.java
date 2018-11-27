@@ -1,6 +1,7 @@
 package com.pazz.springboot.mongodb.entity;
 
 import lombok.Data;
+import org.springframework.data.mongodb.core.mapping.Document;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -15,6 +16,7 @@ import java.util.Date;
  * @description: 系统日志信息
  */
 @Data
+@Document(collection = "LogInfo")
 public class LogInfo implements Serializable {
     private static final long serialVersionUID = -1866263417231366274L;
 

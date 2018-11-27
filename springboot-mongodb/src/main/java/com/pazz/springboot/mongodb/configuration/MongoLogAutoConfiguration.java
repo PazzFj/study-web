@@ -26,7 +26,7 @@ import org.springframework.data.mongodb.core.MongoTemplate;
 @AutoConfigureAfter(MongoDataAutoConfiguration.class)
 @EnableConfigurationProperties(LogProperties.class)
 @Import(MongoDataAutoConfiguration.class)
-@ConditionalOnProperty(prefix = "spring.data.mongodb", name = "uri")
+@ConditionalOnProperty(prefix = "spring.boot.mongodb", name = "uri")
 public class MongoLogAutoConfiguration {
 
     @Autowired

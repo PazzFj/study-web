@@ -1,7 +1,8 @@
-package com.pazz.springboot.mongodb.service;
+package com.pazz.springboot.mongodb.service.impl;
 
 import com.pazz.springboot.mongodb.entity.Address;
 import com.pazz.springboot.mongodb.repository.AddressRepository;
+import com.pazz.springboot.mongodb.service.IAddressService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -13,7 +14,7 @@ import java.util.List;
  * @description:
  */
 @Service
-public class AddressServiceImpl implements AddressService {
+public class AddressService implements IAddressService {
 
     @Autowired
     private AddressRepository repository;

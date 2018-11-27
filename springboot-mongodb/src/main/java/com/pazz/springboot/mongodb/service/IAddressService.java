@@ -10,7 +10,7 @@ import java.util.List;
  * @create: 2018/11/26 16:31
  * @description:
  */
-public interface AddressService {
+public interface IAddressService {
 
     /**
      * 根据省，拿地址列表.
