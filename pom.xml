@@ -15,6 +15,7 @@
         <module>springboot-tomcat</module>
         <module>springboot-log</module>
         <module>springboot-mongodb</module>
+        <module>springboot-redis</module>
     </modules>
 
     <properties>
