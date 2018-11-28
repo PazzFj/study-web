@@ -76,7 +76,6 @@ public class GenericJackson2JsonRedisSerializer implements RedisSerializer<Objec
      * (non-Javadoc)
      * @see org.springframework.data.redis.serializer.RedisSerializer#serialize(java.lang.Object)
      */
-    @Override
     public byte[] serialize(Object source) throws SerializationException {
 
         if (source == null) {
@@ -94,7 +93,6 @@ public class GenericJackson2JsonRedisSerializer implements RedisSerializer<Objec
      * (non-Javadoc)
      * @see org.springframework.data.redis.serializer.RedisSerializer#deserialize(byte[])
      */
-    @Override
     public Object deserialize(byte[] source) throws SerializationException {
         return deserialize(source, Object.class);
     }

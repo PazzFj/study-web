@@ -1,11 +1,11 @@
-package com.pazz.springboot.redis.properties;
+package com.pazz.springboot.redis.configuration;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 @Data
 @ConfigurationProperties(prefix = "spring.boot.cache")
-public class CacheProperties {
+public class RedisCacheProperties {
     /**
      * 过期时间
      */

@@ -1,12 +1,11 @@
-package com.pazz.springboot.redis;
+package com.pazz.springboot.redis.cache;
 
-import com.pazz.springboot.redis.cache.ICache;
-import com.pazz.springboot.redis.cache.ITTLCacheProvider;
 import com.pazz.springboot.redis.exception.KeyIsNotFoundException;
 import com.pazz.springboot.redis.exception.ValueIsBlankException;
 import com.pazz.springboot.redis.exception.ValueIsNullException;
+import com.pazz.springboot.redis.manager.CacheManager;
+import com.pazz.springboot.redis.provider.ICacheProvider;
 import com.pazz.springboot.redis.storage.RedisCacheStorage;
-import com.pazz.springboot.redis.util.CacheManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -21,18 +20,18 @@ import java.util.Map;
  * @create: 2018/11/8 10:30
  * @description: TTL类型的缓存
  */
-public abstract class AbstractTTLRedisCache<V> implements ICache<String, V>, InitializingBean, DisposableBean {
+public abstract class AbstractRedisCache<V> implements InitializingBean, DisposableBean {
 
     /**
      * 日志
      */
-    private static final Log LOG = LogFactory.getLog(AbstractTTLRedisCache.class);
+    private static final Log LOG = LogFactory.getLog(AbstractRedisCache.class);
     /**
-     * 数据提供者
+     * 数据提供者(Data)
      */
-    protected ITTLCacheProvider<V> cacheProvider;
+    protected ICacheProvider<V> cacheProvider;
     /**
-     * 数据储存器
+     * 数据储存器(RedisTemplate)
      */
     protected RedisCacheStorage<String, V> cacheStorage;
     /**
@@ -40,10 +39,12 @@ public abstract class AbstractTTLRedisCache<V> implements ICache<String, V>, Ini
      */
     protected int timeOut = 0;
 
+    public abstract String getUUID();
+
     /**
      * 设置数据提供者
      */
-    public void setCacheProvider(ITTLCacheProvider<V> cacheProvider) {
+    public void setCacheProvider(ICacheProvider<V> cacheProvider) {
         this.cacheProvider = cacheProvider;
     }
 
@@ -135,7 +136,7 @@ public abstract class AbstractTTLRedisCache<V> implements ICache<String, V>, Ini
     }
 
     public void destroy() {
-
+//        CacheManager.getInstance().shutdown();
     }
 
     public void afterPropertiesSet() {

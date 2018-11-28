@@ -1,18 +1,20 @@
 package com.pazz.springboot.redis.configuration;
 
-import com.pazz.springboot.redis.properties.CacheProperties;
 import com.pazz.springboot.redis.storage.RedisCacheStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
+import org.springframework.stereotype.Component;
 
 /**
  * @author: 彭坚
@@ -20,15 +22,17 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @description: Redis Cache 自动装载
  */
 @Configuration
-@AutoConfigureAfter(RedisAutoConfiguration.class)
-@EnableConfigurationProperties(CacheProperties.class)
+@ConditionalOnClass(RedisTemplate.class)
+@Import(RedisTemplate.class)
+@AutoConfigureAfter({RedisAutoConfiguration.class, RedisTemplate.class})
+@EnableConfigurationProperties(RedisCacheProperties.class)
 public class RedisCacheAutoConfiguration {
     @Autowired
-    private CacheProperties properties;
+    private RedisCacheProperties properties;
 
     @Bean
     @SuppressWarnings("SpringJavaAutowiringInspection")
-    @ConditionalOnMissingBean
+    @ConditionalOnMissingBean(name = "redisTemplate")
     @ConditionalOnBean({RedisTemplate.class})
     public RedisCacheStorage redisCacheStorage(RedisTemplate redisTemplate) {
         RedisCacheStorage redisCacheStorage = new RedisCacheStorage();
