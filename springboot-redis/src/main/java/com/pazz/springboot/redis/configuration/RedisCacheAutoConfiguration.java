@@ -14,36 +14,35 @@ import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
 
 /**
  * @author: 彭坚
  * @create: 2018/11/11 15:54
  * @description: Redis Cache 自动装载
  */
-@Configuration
-@ConditionalOnClass(RedisTemplate.class)
-@Import(RedisTemplate.class)
-@AutoConfigureAfter({RedisAutoConfiguration.class, RedisTemplate.class})
-@EnableConfigurationProperties(RedisCacheProperties.class)
-public class RedisCacheAutoConfiguration {
-    @Autowired
-    private RedisCacheProperties properties;
-
-    @Bean
-    @SuppressWarnings("SpringJavaAutowiringInspection")
-    @ConditionalOnMissingBean(name = "redisTemplate")
-    @ConditionalOnBean({RedisTemplate.class})
-    public RedisCacheStorage redisCacheStorage(RedisTemplate redisTemplate) {
-        RedisCacheStorage redisCacheStorage = new RedisCacheStorage();
-        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(serializer);
-        redisTemplate.setHashKeySerializer(serializer);
-        redisTemplate.setHashValueSerializer(serializer);
-        redisCacheStorage.setRedisTemplate(redisTemplate);
-        redisCacheStorage.setExpire(properties.getExpireAfter());
-        return redisCacheStorage;
-    }
-
-}
+//@Configuration
+//@ConditionalOnClass(RedisTemplate.class)
+//@Import(RedisTemplate.class)
+//@AutoConfigureAfter({RedisAutoConfiguration.class, RedisTemplate.class})
+//@EnableConfigurationProperties(RedisCacheProperties.class)
+//public class RedisCacheAutoConfiguration {
+//    @Autowired
+//    private RedisCacheProperties properties;
+//
+//    @Bean
+//    @SuppressWarnings("SpringJavaAutowiringInspection")
+//    @ConditionalOnMissingBean
+//    @ConditionalOnBean({RedisTemplate.class})
+//    public RedisCacheStorage redisCacheStorage(RedisTemplate redisTemplate) {
+//        RedisCacheStorage redisCacheStorage = new RedisCacheStorage();
+//        GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
+//        redisTemplate.setKeySerializer(new StringRedisSerializer());
+//        redisTemplate.setValueSerializer(serializer);
+//        redisTemplate.setHashKeySerializer(serializer);
+//        redisTemplate.setHashValueSerializer(serializer);
+//        redisCacheStorage.setRedisTemplate(redisTemplate);
+//        redisCacheStorage.setExpire(properties.getExpireAfter());
+//        return redisCacheStorage;
+//    }
+//
+//}

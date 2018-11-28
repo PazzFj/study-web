@@ -22,7 +22,7 @@ public class PersonCache extends AbstractRedisCache<Person> {
 
     @Autowired
     public void setCacheProvider(ICacheProvider<Person> provider) {
-        super.setCacheProvider(provider);
+        super.setCacheProvider(new PersonProvider());
     }
 
     @Autowired

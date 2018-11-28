@@ -5,7 +5,9 @@ import com.pazz.springboot.redis.exception.KeyIsNotFoundException;
 import com.pazz.springboot.redis.exception.ValueIsNullException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
+import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -14,6 +16,7 @@ import java.util.concurrent.TimeUnit;
  * @create: 2018/11/8 10:41
  * @description:
  */
+@Component
 public class RedisCacheStorage<K, V> {
 
     /**
@@ -28,6 +31,10 @@ public class RedisCacheStorage<K, V> {
      * 日志
      */
     private Log log = LogFactory.getLog(getClass());
+
+    public RedisCacheStorage() {
+        redisTemplate = new RedisTemplate();
+    }
 
     public boolean set(K key, V value) {
         set(key, value, expire);
@@ -68,7 +75,7 @@ public class RedisCacheStorage<K, V> {
     }
 
     public void setRedisTemplate(RedisTemplate redisTemplate) {
-        this.redisTemplate = redisTemplate;
+        this.redisTemplate = new RedisTemplate();
     }
 
     public void setExpire(int expire) {
