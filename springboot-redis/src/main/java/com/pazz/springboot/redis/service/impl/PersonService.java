@@ -5,6 +5,7 @@ import com.pazz.springboot.redis.cache.PersonCache;
 import com.pazz.springboot.redis.entity.Person;
 import com.pazz.springboot.redis.manager.CacheManager;
 import com.pazz.springboot.redis.service.IPersonService;
+import com.pazz.springboot.redis.util.JsonUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -15,12 +16,16 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService implements IPersonService {
 
-
     //com.pazz.springboot.redis.cache.PersonCache
 
     public Person getPerson(String name) {
-        AbstractRedisCache<Person> redisCache = CacheManager.getInstance().getCache(PersonCache.UUID);
-        return redisCache.get(name);
+        AbstractRedisCache<String> redisCache = CacheManager.getInstance().getCache(PersonCache.UUID);
+        return JsonUtils.toObject(redisCache.get(name), Person.class);
+    }
+
+    public void addPerson(Person person) {
+        AbstractRedisCache<String> redisCache = CacheManager.getInstance().getCache(PersonCache.UUID);
+        ((PersonCache)redisCache).addPerson(person);
     }
 
 }

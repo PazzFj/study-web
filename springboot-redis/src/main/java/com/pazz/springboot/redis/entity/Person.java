@@ -12,7 +12,7 @@ public class Person {
 
     private int pid;
     private String pName;
-    private String psex;
+    private String pSex;
     private int pAge;
 
     public Person() {
@@ -23,7 +23,7 @@ public class Person {
         return "Person{" +
                 "pid=" + pid +
                 ", pName='" + pName + '\'' +
-                ", psex='" + psex + '\'' +
+                ", psex='" + pSex + '\'' +
                 ", pAge=" + pAge +
                 '}';
     }

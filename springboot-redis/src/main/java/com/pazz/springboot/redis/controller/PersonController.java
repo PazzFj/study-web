@@ -26,4 +26,9 @@ public class PersonController {
         return personService.getPerson(name);
     }
 
+    @GetMapping("/add")
+    public void addPerson(Person person){
+        personService.addPerson(person);
+    }
+
 }

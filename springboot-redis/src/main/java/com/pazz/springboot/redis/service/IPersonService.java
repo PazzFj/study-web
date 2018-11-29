@@ -11,4 +11,6 @@ public interface IPersonService {
 
     Person getPerson(String name);
 
+    void addPerson(Person person);
+
 }

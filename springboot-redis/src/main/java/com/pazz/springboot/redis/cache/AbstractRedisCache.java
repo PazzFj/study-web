@@ -136,7 +136,7 @@ public abstract class AbstractRedisCache<V> implements InitializingBean, Disposa
     }
 
     public void destroy() {
-//        CacheManager.getInstance().shutdown();
+        CacheManager.getInstance().shutdown();
     }
 
     public void afterPropertiesSet() {

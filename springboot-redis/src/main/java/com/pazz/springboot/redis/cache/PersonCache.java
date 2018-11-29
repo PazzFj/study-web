@@ -3,6 +3,7 @@ package com.pazz.springboot.redis.cache;
 import com.pazz.springboot.redis.entity.Person;
 import com.pazz.springboot.redis.provider.ICacheProvider;
 import com.pazz.springboot.redis.storage.RedisCacheStorage;
+import com.pazz.springboot.redis.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -12,7 +13,7 @@ import org.springframework.stereotype.Component;
  * @description:
  */
 @Component
-public class PersonCache extends AbstractRedisCache<Person> {
+public class PersonCache extends AbstractRedisCache<String> {
 
     public static final String UUID = PersonCache.class.getName();
 
@@ -20,13 +21,18 @@ public class PersonCache extends AbstractRedisCache<Person> {
         return UUID;
     }
 
-    @Autowired
-    public void setCacheProvider(ICacheProvider<Person> provider) {
-        super.setCacheProvider(new PersonProvider());
+    public void addPerson(Person person) {
+        String json = JsonUtils.toJson(person);
+        cacheStorage.set(getKey(person.getPName()), json);
     }
 
     @Autowired
-    public void setCacheStorage(RedisCacheStorage<String, Person> cacheStorage) {
+    public void setCacheProvider(ICacheProvider<String> provider) {
+        super.setCacheProvider(provider);
+    }
+
+    @Autowired
+    public void setCacheStorage(RedisCacheStorage<String, String> cacheStorage) {
         super.setCacheStorage(cacheStorage);
     }
 }
