@@ -13,9 +13,9 @@
         <module>springboot-mybatis</module>
         <module>springboot-exception-handler</module>
         <module>springboot-tomcat</module>
-        <module>springboot-log</module>
         <module>springboot-mongodb</module>
         <module>springboot-redis</module>
+        <module>springboot-example</module>
     </modules>
 
     <properties>
