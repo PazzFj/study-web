@@ -16,6 +16,7 @@
         <module>springboot-mongodb</module>
         <module>springboot-redis</module>
         <module>springboot-example</module>
+        <module>springboot-rocketmq</module>
     </modules>
 
     <properties>
