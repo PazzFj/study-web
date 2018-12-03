@@ -6,11 +6,11 @@ import java.util.List;
 
 /**
  * @author: 彭坚
- * @create: 2018/12/3 10:46
+ * @create: 2018/12/3 22:27
  * @description:
  */
-public interface IPersonService {
+public interface IConsumerService {
 
-    void addPerson(List<Person> persons);
+    void addPerson(List<Person> personList);
 
 }

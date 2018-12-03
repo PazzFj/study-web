@@ -4,7 +4,12 @@ import com.pazz.springboot.rocketmq.core.AbstractRocketMQProducer;
 import com.pazz.springboot.rocketmq.core.AbstractRocketMQPushConsumer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyContext;
+import org.apache.rocketmq.client.consumer.listener.ConsumeConcurrentlyStatus;
+import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
+import org.apache.rocketmq.common.message.MessageExt;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -14,16 +19,19 @@ import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import javax.annotation.PostConstruct;
+import java.util.List;
 import java.util.Map;
 
 /**
  * @author: 彭坚
  * @create: 2018/12/3 16:27
- * @description:
+ * @description: 配置类
  */
+@Component
 @Configuration
 @ConditionalOnBean(annotation = EnableRocketMQConfiguration.class)
 @ConditionalOnClass(DefaultMQProducer.class)
@@ -108,7 +116,7 @@ public class RocketMQConfiguration implements ApplicationContextAware {
     /**
      * 发布Consumer
      */
-    private void publishConsumer(String beanName, Object bean) {
+    private void publishConsumer(String beanName, Object bean) throws Exception {
         RocketMQConsumer mqConsumer = applicationContext.findAnnotationOnBean(beanName, RocketMQConsumer.class);
         if (StringUtils.isEmpty(mqConsumer.consumerGroup())) {
             throw new RuntimeException("consumer's consumerGroup must be defined");
@@ -124,10 +132,30 @@ public class RocketMQConfiguration implements ApplicationContextAware {
         if (StringUtils.isEmpty(topic)) {
             topic = mqConsumer.topic();
         }
-        if(!AbstractRocketMQPushConsumer.class.isAssignableFrom(bean.getClass())){
+        if (!AbstractRocketMQPushConsumer.class.isAssignableFrom(bean.getClass())) {
             throw new RuntimeException(bean.getClass().getName() + " - consumer未实现IMQPushConsumer接口");
         }
-
+        //本地的消费着
+        AbstractRocketMQPushConsumer rocketMQPushConsumer = (AbstractRocketMQPushConsumer) bean;
+        //默认push消费者
+        DefaultMQPushConsumer pushConsumer = new DefaultMQPushConsumer(consumerGroup);
+        pushConsumer.setNamesrvAddr(properties.getNameServerAddress());
+        pushConsumer.setVipChannelEnabled(properties.isVipChannelEnabled());
+        pushConsumer.subscribe(topic, mqConsumer.tag());                         //向消费订阅订阅主题。
+        pushConsumer.setInstanceName(rocketMQPushConsumer.getInstanceName());       //UUID
+        pushConsumer.setMessageModel(mqConsumer.messageMode());
+        pushConsumer.setConsumeFromWhere(rocketMQPushConsumer.getConsumeFromWhere());  //消费点策略 默认从队列尾部消费
+        pushConsumer.setConsumeThreadMin(rocketMQPushConsumer.getConsumeThreadMin());  //最小消费线程数量
+        pushConsumer.setConsumeThreadMax(rocketMQPushConsumer.getConsumeThreadMax());   //最大消费线程数量
+        pushConsumer.setConsumeMessageBatchMaxSize(rocketMQPushConsumer.getConsumeMessageBatchMaxSize());  //批量消费的最大消息条数
+        pushConsumer.setPullBatchSize(rocketMQPushConsumer.getPullBatchSize());     //一次最大拉取的批量大小
+        //注册一个回调函数，以便在消息到达时执行并发消费。
+        pushConsumer.registerMessageListener((List<MessageExt> list, ConsumeConcurrentlyContext consumeConcurrentlyContext) -> {
+            AbstractRocketMQPushConsumer abstractMQPushConsumer = (AbstractRocketMQPushConsumer) bean;
+            return abstractMQPushConsumer.dealMessage(list, consumeConcurrentlyContext);
+        });
+        pushConsumer.start();
+        log.info(String.format("%s is ready to subscribe message", bean.getClass().getName()));
     }
 
 
