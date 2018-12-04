@@ -26,7 +26,7 @@ public class ProducerService implements IProducerService {
             Person person = new Person(i, "admin", "男", 3 * i + 1);
             personList.add(person);
         }
-        System.out.println(personList.size());
+        System.out.println("正在发送数据: " + personList.size());
         personRocketMQProducer.doBatchSend(personList);
     }
 
