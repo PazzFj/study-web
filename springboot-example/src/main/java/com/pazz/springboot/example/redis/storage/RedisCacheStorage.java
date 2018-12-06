@@ -2,7 +2,7 @@ package com.pazz.springboot.example.redis.storage;
 
 import com.pazz.springboot.example.cache.exception.KeyIsNotFoundException;
 import com.pazz.springboot.example.cache.exception.ValueIsNullException;
-import com.pazz.springboot.example.cache.storage.IRemoteCacheStorage;
+import com.pazz.springboot.example.cache.IRemoteCacheStorage;
 import com.pazz.springboot.example.redis.exception.RedisCacheStorageException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

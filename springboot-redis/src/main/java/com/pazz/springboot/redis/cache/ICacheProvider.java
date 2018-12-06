@@ -1,4 +1,4 @@
-package com.pazz.springboot.redis.provider;
+package com.pazz.springboot.redis.cache;
 
 /**
  * @author: 彭坚

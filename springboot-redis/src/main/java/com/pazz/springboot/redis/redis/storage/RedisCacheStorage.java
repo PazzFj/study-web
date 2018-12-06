@@ -1,15 +1,14 @@
-package com.pazz.springboot.redis.storage;
+package com.pazz.springboot.redis.redis.storage;
 
-import com.pazz.springboot.redis.exception.CacheRedisException;
-import com.pazz.springboot.redis.exception.KeyIsNotFoundException;
-import com.pazz.springboot.redis.exception.ValueIsNullException;
-import com.pazz.springboot.redis.serializer.GenericJackson2JsonRedisSerializer;
+import com.pazz.springboot.redis.cache.IRemoteCacheStorage;
+import com.pazz.springboot.redis.redis.exception.CacheRedisException;
+import com.pazz.springboot.redis.redis.exception.KeyIsNotFoundException;
+import com.pazz.springboot.redis.redis.exception.ValueIsNullException;
+import com.pazz.springboot.redis.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.data.redis.serializer.StringRedisSerializer;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -18,13 +17,11 @@ import java.util.concurrent.TimeUnit;
  * @create: 2018/11/8 10:41
  * @description:
  */
-@Component
-public class RedisCacheStorage<K, V> {
+public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V>, InitializingBean {
 
     /**
      * redis cache
      */
-    @Autowired
     private RedisTemplate redisTemplate;
     /**
      * 默认数据过期时间 10分钟
@@ -35,17 +32,12 @@ public class RedisCacheStorage<K, V> {
      */
     private Log log = LogFactory.getLog(getClass());
 
-    public RedisCacheStorage() {
-
-    }
-
     public boolean set(K key, V value) {
         set(key, value, expire);
         return true;
     }
 
     public boolean set(K key, V value, int exp) {
-        before();
         if (key == null) {
             throw new CacheRedisException("key does not allow for null!");
         }
@@ -54,17 +46,7 @@ public class RedisCacheStorage<K, V> {
         return true;
     }
 
-    GenericJackson2JsonRedisSerializer serializer = new GenericJackson2JsonRedisSerializer();
-
-    public void before(){
-        redisTemplate.setKeySerializer(new StringRedisSerializer());
-        redisTemplate.setValueSerializer(serializer);
-        redisTemplate.setHashKeySerializer(serializer);
-        redisTemplate.setHashValueSerializer(serializer);
-    }
-
     public V get(K key) {
-        before();
         if (key == null) {
             throw new CacheRedisException("key does not allow for null!");
         }
@@ -94,5 +76,9 @@ public class RedisCacheStorage<K, V> {
 
     public void setExpire(int expire) {
         this.expire = expire;
+    }
+
+    public void afterPropertiesSet() throws Exception {
+
     }
 }

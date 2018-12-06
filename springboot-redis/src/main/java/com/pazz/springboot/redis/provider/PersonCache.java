@@ -1,8 +1,9 @@
-package com.pazz.springboot.redis.cache;
+package com.pazz.springboot.redis.provider;
 
+import com.pazz.springboot.redis.cache.ICacheProvider;
 import com.pazz.springboot.redis.entity.Person;
-import com.pazz.springboot.redis.provider.ICacheProvider;
-import com.pazz.springboot.redis.storage.RedisCacheStorage;
+import com.pazz.springboot.redis.redis.storage.AbstractRedisCache;
+import com.pazz.springboot.redis.redis.storage.RedisCacheStorage;
 import com.pazz.springboot.redis.util.JsonUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;

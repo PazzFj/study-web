@@ -1,11 +1,11 @@
 package com.pazz.springboot.redis.service.impl;
 
-import com.pazz.springboot.redis.cache.AbstractRedisCache;
-import com.pazz.springboot.redis.cache.PersonCache;
+import com.pazz.springboot.redis.cache.ICache;
+import com.pazz.springboot.redis.redis.storage.AbstractRedisCache;
+import com.pazz.springboot.redis.provider.PersonCache;
 import com.pazz.springboot.redis.entity.Person;
-import com.pazz.springboot.redis.manager.CacheManager;
+import com.pazz.springboot.redis.cache.CacheManager;
 import com.pazz.springboot.redis.service.IPersonService;
-import com.pazz.springboot.redis.util.JsonUtils;
 import org.springframework.stereotype.Service;
 
 /**
@@ -16,16 +16,15 @@ import org.springframework.stereotype.Service;
 @Service
 public class PersonService implements IPersonService {
 
-    //com.pazz.springboot.redis.cache.PersonCache
-
     public Person getPerson(String name) {
-        AbstractRedisCache<String> redisCache = CacheManager.getInstance().getCache(PersonCache.UUID);
-        return JsonUtils.toObject(redisCache.get(name), Person.class);
+        ICache<String, Person> cache = CacheManager.getInstance().getCache(PersonCache.UUID);
+        return cache.get(name);
+//        return JsonUtils.toObject(redisCache.get(name), Person.class);
     }
 
     public void addPerson(Person person) {
-        AbstractRedisCache<String> redisCache = CacheManager.getInstance().getCache(PersonCache.UUID);
-        ((PersonCache)redisCache).addPerson(person);
+        ICache<String, Person> cache = CacheManager.getInstance().getCache(PersonCache.UUID);
+        ((PersonCache) ((AbstractRedisCache) cache)).addPerson(person);
     }
 
 }

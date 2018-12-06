@@ -1,4 +1,4 @@
-package com.pazz.springboot.redis.exception;
+package com.pazz.springboot.redis.redis.exception;
 
 public class CacheRedisException extends RuntimeException {
 

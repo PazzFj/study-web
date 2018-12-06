@@ -1,11 +1,11 @@
-package com.pazz.springboot.redis.cache;
+package com.pazz.springboot.redis.redis.storage;
 
-import com.pazz.springboot.redis.exception.KeyIsNotFoundException;
-import com.pazz.springboot.redis.exception.ValueIsBlankException;
-import com.pazz.springboot.redis.exception.ValueIsNullException;
-import com.pazz.springboot.redis.manager.CacheManager;
-import com.pazz.springboot.redis.provider.ICacheProvider;
-import com.pazz.springboot.redis.storage.RedisCacheStorage;
+import com.pazz.springboot.redis.cache.ICache;
+import com.pazz.springboot.redis.redis.exception.KeyIsNotFoundException;
+import com.pazz.springboot.redis.redis.exception.ValueIsBlankException;
+import com.pazz.springboot.redis.redis.exception.ValueIsNullException;
+import com.pazz.springboot.redis.cache.CacheManager;
+import com.pazz.springboot.redis.cache.ICacheProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;
@@ -20,7 +20,7 @@ import java.util.Map;
  * @create: 2018/11/8 10:30
  * @description: TTL类型的缓存
  */
-public abstract class AbstractRedisCache<V> implements InitializingBean, DisposableBean {
+public abstract class AbstractRedisCache<V> implements ICache<String, V>, InitializingBean, DisposableBean {
 
     /**
      * 日志

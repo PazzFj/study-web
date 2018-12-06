@@ -1,4 +1,4 @@
-package com.pazz.springboot.example.cache.provider;
+package com.pazz.springboot.example.cache;
 
 /**
  * @author: Peng Jian

@@ -1,4 +1,4 @@
-package com.pazz.springboot.redis.serializer;
+package com.pazz.springboot.redis.redis.serializer;
 
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 import com.fasterxml.jackson.core.JsonGenerator;

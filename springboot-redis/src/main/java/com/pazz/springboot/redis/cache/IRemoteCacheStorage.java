@@ -1,4 +1,4 @@
-package com.pazz.springboot.example.cache.storage;
+package com.pazz.springboot.redis.cache;
 
 /**
  * @author: Peng Jian

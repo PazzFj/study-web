@@ -1,6 +1,6 @@
 package com.pazz.springboot.example.provider;
 
-import com.pazz.springboot.example.cache.provider.ITTLCacheProvider;
+import com.pazz.springboot.example.cache.ITTLCacheProvider;
 import com.pazz.springboot.example.redis.storage.RedisCacheStorage;
 import com.pazz.springboot.example.redis.storage.AbstractTTLRedisCache;
 import com.pazz.springboot.example.entity.Person;

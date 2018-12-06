@@ -30,7 +30,7 @@ public final class CacheManager<K, V> {
         // 不允许UUID重复，应用必须在实现的Cache接口确保命名不重复
         String uuid = cache.getUUID();
         if (uuidCaches.containsKey(uuid)) {
-            throw new CacheConfigException("Dumplicate uuid " + uuid + " to cache provider " + cache.getClass().getName() + " and " + uuidCaches.get(uuid).getClass().getName());
+            throw new CacheConfigException("Duplicate uuid " + uuid + " to cache provider " + cache.getClass().getName() + " and " + uuidCaches.get(uuid).getClass().getName());
         }
         uuidCaches.put(uuid, cache);
     }

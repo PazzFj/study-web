@@ -5,7 +5,7 @@ import com.pazz.springboot.example.cache.ICache;
 import com.pazz.springboot.example.cache.exception.KeyIsNotFoundException;
 import com.pazz.springboot.example.cache.exception.ValueIsBlankException;
 import com.pazz.springboot.example.cache.exception.ValueIsNullException;
-import com.pazz.springboot.example.cache.provider.ITTLCacheProvider;
+import com.pazz.springboot.example.cache.ITTLCacheProvider;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.DisposableBean;

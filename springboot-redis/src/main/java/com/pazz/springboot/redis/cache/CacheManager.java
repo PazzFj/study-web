@@ -1,8 +1,6 @@
-package com.pazz.springboot.redis.manager;
+package com.pazz.springboot.redis.cache;
 
-import com.pazz.springboot.redis.cache.AbstractRedisCache;
-import com.pazz.springboot.redis.exception.CacheRedisException;
-import org.springframework.stereotype.Component;
+import com.pazz.springboot.redis.redis.exception.CacheRedisException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -12,15 +10,14 @@ import java.util.concurrent.ConcurrentHashMap;
  * @create: 2018/11/28 14:17
  * @description:
  */
-@Component
-public final class CacheManager<V> {
+public final class CacheManager<K, V> {
 
     private static final CacheManager CACHE_MANAGER = new CacheManager();
 
     /**
      * 保存所有缓存实例
      */
-    private final Map<String, AbstractRedisCache<V>> uuidCaches = new ConcurrentHashMap<String, AbstractRedisCache<V>>();
+    private final Map<String, ICache<K, V>> uuidCaches = new ConcurrentHashMap<String, ICache<K, V>>();
 
     private CacheManager() {
     }
@@ -29,11 +26,11 @@ public final class CacheManager<V> {
         return CACHE_MANAGER;
     }
 
-    public void registerCacheProvider(AbstractRedisCache cache) {
+    public void registerCacheProvider(ICache<K, V> cache) {
         // 不允许UUID重复，应用必须在实现的Cache接口确保命名不重复
         String uuid = cache.getUUID();
         if (uuidCaches.containsKey(uuid)) {
-            throw new CacheRedisException("Dumplicate uuid " + uuid + " to cache provider " + cache.getClass().getName() + " and " + uuidCaches.get(uuid).getClass().getName());
+            throw new CacheRedisException("Duplicate uuid " + uuid + " to cache provider " + cache.getClass().getName() + " and " + uuidCaches.get(uuid).getClass().getName());
         }
         uuidCaches.put(uuid, cache);
     }
@@ -41,8 +38,8 @@ public final class CacheManager<V> {
     /**
      * 根据uuid获取缓存实例
      */
-    public AbstractRedisCache<V> getCache(String uuid) {
-        AbstractRedisCache<V> cache = uuidCaches.get(uuid);
+    public ICache<K, V> getCache(String uuid) {
+        ICache<K, V> cache = uuidCaches.get(uuid);
         if (cache == null) {
             throw new CacheRedisException("No register cache provider for cache UUID " + uuid);
         }

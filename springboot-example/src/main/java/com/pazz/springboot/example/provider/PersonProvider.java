@@ -1,6 +1,6 @@
 package com.pazz.springboot.example.provider;
 
-import com.pazz.springboot.example.cache.provider.ITTLCacheProvider;
+import com.pazz.springboot.example.cache.ITTLCacheProvider;
 import com.pazz.springboot.example.entity.Person;
 import org.springframework.stereotype.Component;
 
