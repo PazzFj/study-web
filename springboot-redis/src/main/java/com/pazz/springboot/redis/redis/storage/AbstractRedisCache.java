@@ -1,9 +1,9 @@
 package com.pazz.springboot.redis.redis.storage;
 
 import com.pazz.springboot.redis.cache.ICache;
-import com.pazz.springboot.redis.redis.exception.KeyIsNotFoundException;
-import com.pazz.springboot.redis.redis.exception.ValueIsBlankException;
-import com.pazz.springboot.redis.redis.exception.ValueIsNullException;
+import com.pazz.springboot.redis.cache.exception.KeyIsNotFoundException;
+import com.pazz.springboot.redis.cache.exception.ValueIsBlankException;
+import com.pazz.springboot.redis.cache.exception.ValueIsNullException;
 import com.pazz.springboot.redis.cache.CacheManager;
 import com.pazz.springboot.redis.cache.ICacheProvider;
 import org.apache.commons.logging.Log;
@@ -25,7 +25,7 @@ public abstract class AbstractRedisCache<V> implements ICache<String, V>, Initia
     /**
      * 日志
      */
-    private static final Log LOG = LogFactory.getLog(AbstractRedisCache.class);
+    private final Log LOG = LogFactory.getLog(getClass());
     /**
      * 数据提供者(Data)
      */

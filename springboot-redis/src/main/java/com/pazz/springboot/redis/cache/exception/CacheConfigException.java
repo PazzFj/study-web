@@ -1,4 +1,4 @@
-package com.pazz.springboot.example.cache.exception;
+package com.pazz.springboot.redis.cache.exception;
 
 /**
  * @author: Peng Jian

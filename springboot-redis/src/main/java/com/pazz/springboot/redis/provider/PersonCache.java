@@ -14,7 +14,7 @@ import org.springframework.stereotype.Component;
  * @description:
  */
 @Component
-public class PersonCache extends AbstractRedisCache<String> {
+public class PersonCache extends AbstractRedisCache<Person> {
 
     public static final String UUID = PersonCache.class.getName();
 
@@ -22,18 +22,18 @@ public class PersonCache extends AbstractRedisCache<String> {
         return UUID;
     }
 
-    public void addPerson(Person person) {
-        String json = JsonUtils.toJson(person);
-        cacheStorage.set(getKey(person.getPName()), json);
-    }
+//    public void addPerson(Person person) {
+////        String json = JsonUtils.toJson(person);
+//        cacheStorage.set(getKey(person.getPName()), person);
+//    }
 
     @Autowired
-    public void setCacheProvider(ICacheProvider<String> provider) {
+    public void setCacheProvider(ICacheProvider<Person> provider) {
         super.setCacheProvider(provider);
     }
 
     @Autowired
-    public void setCacheStorage(RedisCacheStorage<String, String> cacheStorage) {
+    public void setCacheStorage(RedisCacheStorage<String, Person> cacheStorage) {
         super.setCacheStorage(cacheStorage);
     }
 }

@@ -2,12 +2,10 @@ package com.pazz.springboot.redis.redis.storage;
 
 import com.pazz.springboot.redis.cache.IRemoteCacheStorage;
 import com.pazz.springboot.redis.redis.exception.CacheRedisException;
-import com.pazz.springboot.redis.redis.exception.KeyIsNotFoundException;
-import com.pazz.springboot.redis.redis.exception.ValueIsNullException;
-import com.pazz.springboot.redis.redis.serializer.GenericJackson2JsonRedisSerializer;
+import com.pazz.springboot.redis.cache.exception.KeyIsNotFoundException;
+import com.pazz.springboot.redis.cache.exception.ValueIsNullException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.data.redis.core.RedisTemplate;
 
 import java.util.concurrent.TimeUnit;
@@ -15,10 +13,14 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author: Peng Jian
  * @create: 2018/11/8 10:41
- * @description:
+ * @description: redis存储
  */
-public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V>, InitializingBean {
+public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V> {
 
+    /**
+     * 日志
+     */
+    private final Log log = LogFactory.getLog(getClass());
     /**
      * redis cache
      */
@@ -27,10 +29,10 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V>, Initi
      * 默认数据过期时间 10分钟
      */
     private int expire = 60 * 10;
-    /**
-     * 日志
-     */
-    private Log log = LogFactory.getLog(getClass());
+
+    public RedisCacheStorage() {
+
+    }
 
     public boolean set(K key, V value) {
         set(key, value, expire);
@@ -78,7 +80,4 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V>, Initi
         this.expire = expire;
     }
 
-    public void afterPropertiesSet() throws Exception {
-
-    }
 }

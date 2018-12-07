@@ -1,6 +1,6 @@
 package com.pazz.springboot.redis.cache;
 
-import com.pazz.springboot.redis.redis.exception.CacheRedisException;
+import com.pazz.springboot.redis.cache.exception.CacheConfigException;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,7 +30,7 @@ public final class CacheManager<K, V> {
         // 不允许UUID重复，应用必须在实现的Cache接口确保命名不重复
         String uuid = cache.getUUID();
         if (uuidCaches.containsKey(uuid)) {
-            throw new CacheRedisException("Duplicate uuid " + uuid + " to cache provider " + cache.getClass().getName() + " and " + uuidCaches.get(uuid).getClass().getName());
+            throw new CacheConfigException("Duplicate uuid " + uuid + " to cache provider " + cache.getClass().getName() + " and " + uuidCaches.get(uuid).getClass().getName());
         }
         uuidCaches.put(uuid, cache);
     }
@@ -41,7 +41,7 @@ public final class CacheManager<K, V> {
     public ICache<K, V> getCache(String uuid) {
         ICache<K, V> cache = uuidCaches.get(uuid);
         if (cache == null) {
-            throw new CacheRedisException("No register cache provider for cache UUID " + uuid);
+            throw new CacheConfigException("No register cache provider for cache UUID " + uuid);
         }
         return cache;
     }

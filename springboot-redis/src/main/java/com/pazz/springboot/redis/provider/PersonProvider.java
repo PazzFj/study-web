@@ -2,7 +2,6 @@ package com.pazz.springboot.redis.provider;
 
 import com.pazz.springboot.redis.entity.Person;
 import com.pazz.springboot.redis.cache.ICacheProvider;
-import com.pazz.springboot.redis.util.JsonUtils;
 import org.springframework.stereotype.Component;
 
 /**
@@ -11,16 +10,17 @@ import org.springframework.stereotype.Component;
  * @description:
  */
 @Component
-public class PersonProvider implements ICacheProvider<String> {
+public class PersonProvider implements ICacheProvider<Person> {
 
-    public String get(String key) {
+    public Person get(String key) {
         System.out.println("key: " + key);
         Person person = new Person();
         person.setPid(12);
         person.setPName("WEST");
         person.setPSex("男");
         person.setPAge(47);
-        return JsonUtils.toJson(person);
+//        return JsonUtils.toJson(person);
+        return person;
     }
 
 }

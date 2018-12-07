@@ -1,7 +1,6 @@
 package com.pazz.springboot.redis.service.impl;
 
 import com.pazz.springboot.redis.cache.ICache;
-import com.pazz.springboot.redis.redis.storage.AbstractRedisCache;
 import com.pazz.springboot.redis.provider.PersonCache;
 import com.pazz.springboot.redis.entity.Person;
 import com.pazz.springboot.redis.cache.CacheManager;
@@ -23,8 +22,8 @@ public class PersonService implements IPersonService {
     }
 
     public void addPerson(Person person) {
-        ICache<String, Person> cache = CacheManager.getInstance().getCache(PersonCache.UUID);
-        ((PersonCache) ((AbstractRedisCache) cache)).addPerson(person);
+//        ICache<String, Person> cache = CacheManager.getInstance().getCache(PersonCache.UUID);
+//        ((PersonCache) ((AbstractRedisCache) cache)).addPerson(person);
     }
 
 }

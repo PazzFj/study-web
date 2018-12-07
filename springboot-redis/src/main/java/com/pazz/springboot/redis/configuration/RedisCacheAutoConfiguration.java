@@ -10,7 +10,6 @@ import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
 import org.springframework.data.redis.serializer.StringRedisSerializer;
@@ -22,7 +21,6 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  */
 @Configuration
 @ConditionalOnClass(RedisTemplate.class)
-@Import(RedisTemplate.class)
 @AutoConfigureAfter({RedisAutoConfiguration.class, RedisTemplate.class})
 @EnableConfigurationProperties(RedisCacheProperties.class)
 public class RedisCacheAutoConfiguration {
