@@ -20,7 +20,7 @@ public class TestService implements ITestService {
     private TestMapper mapper;
 
     public List<Test> queryTestList(String name) {
-        if(null != name || !"".equals(name)){
+        if(null != name && !"".equals(name)){
             name = "%" + name + "%";
         }
         return mapper.queryTestList(name);

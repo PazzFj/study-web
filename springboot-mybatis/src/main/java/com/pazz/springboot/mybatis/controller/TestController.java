@@ -1,11 +1,18 @@
 package com.pazz.springboot.mybatis.controller;
 
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
+import com.pazz.springboot.mybatis.entity.Test;
+import com.pazz.springboot.mybatis.response.PageResponse;
 import com.pazz.springboot.mybatis.serivce.ITestService;
+import com.pazz.springboot.mybatis.vo.TestParamVo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @author: 彭坚
@@ -21,8 +28,16 @@ public class TestController {
 
     @GetMapping("getByName")
     @ResponseBody
-    public String getByName(String name) {
-        return testService.queryTestList(name).toString();
+    public PageResponse getByName(TestParamVo paramVo) {
+        Page<Test> page = PageHelper.offsetPage((paramVo.getPage() - 1) * paramVo.getLimit(), paramVo.getLimit()).doSelectPage(() -> testService.queryTestList(paramVo.getName()));
+        return new PageResponse<>(page.getTotal(), page.getResult());
+    }
+
+    @GetMapping("get")
+    @ResponseBody
+    public PageResponse get(TestParamVo paramVo) {
+        List<Test> tests = testService.queryTestList(paramVo.getName());
+        return new PageResponse<>(tests.size(), tests);
     }
 
 }
