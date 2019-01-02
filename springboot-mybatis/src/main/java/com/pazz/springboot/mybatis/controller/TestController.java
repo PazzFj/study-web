@@ -36,7 +36,7 @@ public class TestController {
     @GetMapping("get")
     @ResponseBody
     public PageResponse get(TestParamVo paramVo) {
-        List<Test> tests = testService.queryTestList(paramVo.getName());
+        List<Test> tests = testService.selectById(paramVo.getName());
         return new PageResponse<>(tests.size(), tests);
     }
 

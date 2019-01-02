@@ -13,4 +13,6 @@ public interface ITestService {
 
     List<Test> queryTestList(String name);
 
+    List<Test> selectById(String id);
+
 }

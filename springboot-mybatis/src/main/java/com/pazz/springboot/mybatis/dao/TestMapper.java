@@ -13,8 +13,10 @@ import java.util.List;
  * @description:
  */
 @Repository
-public interface TestMapper extends Mapper<Test> {
+public interface TestMapper {
 
     List<Test> queryTestList(@Param("name") String name);
+
+    List<Test> selectByIds(@Param("list") List<String> ids);
 
 }

@@ -1,5 +1,6 @@
 package com.pazz.springboot.mybatis.entity;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.Data;
 
 import javax.persistence.Table;
@@ -17,6 +18,7 @@ public class Test {
     private int id;
     private String name;
     private String code;
+    @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
 }
