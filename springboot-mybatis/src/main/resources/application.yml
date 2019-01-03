@@ -11,20 +11,3 @@ spring:
     minIdle: 5
     initialSize: 5
     maxActive: 20
-
-#    filters: stat
-#    maxWait: 60000
-#    timeBetweenEvictionRunsMillis: 60000
-#    minEvictableIdleTimeMillis: 300000
-#    validationQuery: select 'x'
-#    testWhileIdle: true
-#    testOnBorrow: false
-#    testOnReturn: false
-#    poolPreparedStatements: true
-#    maxOpenPreparedStatements: 20
-
-
-#mybatis:
-#  mapper-locations: classpath:mapping/*.xml
-#  mapper-locations: classpath*:com.pazz.springboot.mybatis.dao
-#  type-aliases-package: com.pazz.springboot.mybatis.entity
