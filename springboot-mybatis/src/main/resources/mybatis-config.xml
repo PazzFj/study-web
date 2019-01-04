@@ -3,6 +3,12 @@
         PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
+    <!--<plugins>
+        <plugin interceptor="com.pazz.springboot.mybatis.interceptor.TestInterceptor">
+            &lt;!&ndash; 对拦截器中的属性进行初始化 &ndash;&gt;
+            <property name="testProp" value="100"/>
+        </plugin>
+    </plugins>-->
     <!--<properties resource="application.yml" />-->
     <environments default="development">
         <environment id="development">
