@@ -6,7 +6,7 @@ spring:
     username: root
     password: sa123
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://120.79.141.169:3306/test?useUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://47.98.219.97:3306/test?useUnicode=true&characterEncoding=utf8
     type: com.alibaba.druid.pool.DruidDataSource
     minIdle: 5
     initialSize: 5
