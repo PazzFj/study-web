@@ -6,7 +6,9 @@ import com.pazz.springboot.rocketmq.service.IProducerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -26,7 +28,7 @@ public class ProducerService implements IProducerService {
             Person person = new Person(i, "admin", "男", 3 * i + 1);
             personList.add(person);
         }
-        System.out.println("正在发送数据: " + personList.size());
+        System.out.println("正在发送数据: " + personList.size() + " 时间：" + new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.S").format(new Date()));
         personRocketMQProducer.doBatchSend(personList);
     }
 
