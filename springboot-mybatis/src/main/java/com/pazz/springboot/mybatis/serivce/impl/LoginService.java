@@ -22,7 +22,6 @@ public class LoginService implements ILoginService {
     private LoginMapper loginDao;
 
     public List<Login> queryLoginList(Login login) {
-        System.out.println(login);
         List<Login> loginList = loginDao.queryLoginList(login.getUserName());
         return loginList;
     }

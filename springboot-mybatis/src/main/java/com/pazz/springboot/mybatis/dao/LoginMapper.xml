@@ -18,7 +18,7 @@
     </resultMap>
 
     <select id="queryLoginList" resultMap="login">
-        select id from t_login
+        select * from t_login
         <if test="userName != null and '' != userName">
             where user_name = #{userName, jdbcType=VARCHAR}
         </if>

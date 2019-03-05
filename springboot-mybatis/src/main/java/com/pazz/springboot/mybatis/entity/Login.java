@@ -17,15 +17,25 @@ import java.util.Date;
 public class Login {
 
     private String id;
+
     private String createUser;
+
     @DateTimeFormat(style = "yyyy-MM-dd HH:mm:ss")
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
+
     private String modifyUser;
+
+    @DateTimeFormat(style = "yyyy-MM-dd HH:mm:ss")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date modifyTime;
+
     private String userName;
+
     private String passWord;
+
     private int rank;
+
     private String active;
 
     public Login() {
