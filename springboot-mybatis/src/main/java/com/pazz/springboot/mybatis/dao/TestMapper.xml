@@ -15,6 +15,7 @@
     <select id="queryTestList" resultMap="test">
         select * from test
         <if test="name != null and '' != name">
+            <bind name="name" value="'%' + name + '%'"/>
             where name like #{name, jdbcType=VARCHAR}
         </if>
     </select>
