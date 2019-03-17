@@ -24,8 +24,6 @@ import java.util.Properties;
 })
 public class TestInterceptor implements Interceptor {
 
-    private int testProp;
-
     @Override
     public Object intercept(Invocation invocation) throws Throwable {
         return null;
@@ -41,11 +39,4 @@ public class TestInterceptor implements Interceptor {
 
     }
 
-    public int getTestProp() {
-        return testProp;
-    }
-
-    public void setTestProp(int testProp) {
-        this.testProp = testProp;
-    }
 }

@@ -1,5 +1,7 @@
 package com.pazz.springboot.filter;
 
+import org.springframework.stereotype.Component;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -14,6 +16,7 @@ import java.io.IOException;
  * @create: 2018/11/20 14:55
  * @description:
  */
+//@Component
 public class TestFilter implements Filter {
 
     private static ServletContext servletContext;
