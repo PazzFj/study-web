@@ -11,7 +11,7 @@ import lombok.Data;
 public class TestParamVo {
 
     private String name;
-    private int page;
-    private int limit = 200;
+    private int page = 1;
+    private int limit = 20;
 
 }
