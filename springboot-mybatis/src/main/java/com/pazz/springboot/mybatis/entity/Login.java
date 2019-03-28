@@ -41,6 +41,10 @@ public class Login {
     public Login() {
     }
 
+    public Login(String userName) {
+        this.userName = userName;
+    }
+
     public Login(String id, String createUser, Date createTime, String modifyUser, Date modifyTime, String userName, String passWord, int rank, String active) {
         this.id = id;
         this.createUser = createUser;

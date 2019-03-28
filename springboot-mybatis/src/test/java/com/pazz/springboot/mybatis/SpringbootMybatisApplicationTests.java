@@ -1,5 +1,8 @@
 package com.pazz.springboot.mybatis;
 
+import com.pazz.springboot.mybatis.entity.Login;
+import org.apache.ibatis.reflection.TypeParameterResolver;
+import org.apache.ibatis.reflection.property.PropertyCopier;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
@@ -15,6 +18,8 @@ import org.springframework.web.context.support.AnnotationConfigWebApplicationCon
 import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.io.InputStream;
+import java.lang.reflect.Field;
+import java.lang.reflect.Type;
 import java.util.List;
 
 @RunWith(SpringRunner.class)
@@ -34,11 +39,25 @@ public class SpringbootMybatisApplicationTests {
 //        //spring-web 从一个或多个基于Java的配置类中加载Spring Web应用上下文
 //        ApplicationContext ac5 = new AnnotationConfigWebApplicationContext();
 
-        InputStream inputStream = SpringbootMybatisApplicationTests.class.getClassLoader().getResourceAsStream("mybatis-config.xml");
-        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-        SqlSession sqlSession = sessionFactory.openSession();
-        List<com.pazz.springboot.mybatis.entity.Test> tests = sqlSession.selectList("queryTestList");
-        System.out.println(tests.size());
+//        InputStream inputStream = SpringbootMybatisApplicationTests.class.getClassLoader().getResourceAsStream("mybatis-config.xml");
+//        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+//        SqlSession sqlSession = sessionFactory.openSession();
+//        List<com.pazz.springboot.mybatis.entity.Test> tests = sqlSession.selectList("queryTestList");
+//        System.out.println(tests.size());
+
+        Field[] fields = Login.class.getDeclaredFields();
+        for (int i = 0; i < fields.length; i++) {
+//            System.out.println(fields[i].getGenericType() + "---" + fields[i].getDeclaringClass());
+            Type type = TypeParameterResolver.resolveFieldType(fields[i], fields[i].getDeclaringClass());
+            System.out.println(type);
+        }
+
+        Login login = new Login("copyName");
+        Login login2 = new Login();
+        PropertyCopier.copyBeanProperties(Login.class, login, login2);
+        System.out.println(login2);
+
+
     }
 
 }
