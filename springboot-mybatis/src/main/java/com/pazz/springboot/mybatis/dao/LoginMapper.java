@@ -1,6 +1,6 @@
 package com.pazz.springboot.mybatis.dao;
 
-import com.pazz.springboot.mybatis.entity.Login;
+import com.pazz.springboot.mybatis.entity.LoginEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
 import tk.mybatis.mapper.common.Mapper;
@@ -13,8 +13,8 @@ import java.util.List;
  * @description: LoginMapper
  */
 @Repository
-public interface LoginMapper extends Mapper<Login> {
+public interface LoginMapper extends Mapper<LoginEntity> {
 
-    List<Login> queryLoginList(@Param("userName") String userName);
+    List<LoginEntity> queryLoginList(@Param("userName") String userName);
 
 }

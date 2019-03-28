@@ -1,6 +1,6 @@
 package com.pazz.springboot.mybatis.serivce;
 
-import com.pazz.springboot.mybatis.entity.Test;
+import com.pazz.springboot.mybatis.entity.TestEntity;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface ITestService {
 
-    List<Test> queryTestList(String name);
+    List<TestEntity> queryTestList(String name);
 
-    List<Test> selectById(String... id);
+    List<TestEntity> selectById(String... id);
 
 }

@@ -1,6 +1,6 @@
 package com.pazz.springboot.mybatis.controller;
 
-import com.pazz.springboot.mybatis.entity.Login;
+import com.pazz.springboot.mybatis.entity.LoginEntity;
 import com.pazz.springboot.mybatis.serivce.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -21,14 +21,14 @@ public class LoginController {
 
     @ResponseBody
     @GetMapping("/query")
-    public List<Login> queryLoginList(Login login) {
-        return loginService.queryLoginList(login);
+    public List<LoginEntity> queryLoginList(LoginEntity loginEntity) {
+        return loginService.queryLoginList(loginEntity);
     }
 
     @ResponseBody
     @PostMapping("/add")
-    public void addLogin(@RequestBody Login login) {
-        loginService.addLogin(login);
+    public void addLogin(@RequestBody LoginEntity loginEntity) {
+        loginService.addLogin(loginEntity);
     }
 
 }

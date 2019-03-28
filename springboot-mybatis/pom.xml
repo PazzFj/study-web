@@ -22,9 +22,9 @@
         <mysql.version>5.1.38</mysql.version>
         <lombok.version>1.16.20</lombok.version>
         <commons.lang3.version>3.4</commons.lang3.version>
-        <tk.springboot.mybatis.version>2.0.4</tk.springboot.mybatis.version>
+        <tk.springboot.mybatis.version>2.1.5</tk.springboot.mybatis.version>
         <druid.version>1.1.10</druid.version>
-        <pagehelper.spring.boot.starter.version>1.2.5</pagehelper.spring.boot.starter.version>
+        <pagehelper.spring.boot.starter.version>1.2.10</pagehelper.spring.boot.starter.version>
     </properties>
 
     <dependencies>
@@ -72,7 +72,11 @@
             <artifactId>pagehelper-spring-boot-starter</artifactId>
             <version>${pagehelper.spring.boot.starter.version}</version>
         </dependency>
-
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.9.2</version>
+        </dependency>
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>

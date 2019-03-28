@@ -13,7 +13,7 @@ import java.util.Date;
  */
 @Data
 @Table(name = "test")
-public class Test {
+public class TestEntity {
 
     private int id;
     private String name;
@@ -21,4 +21,10 @@ public class Test {
     @JsonFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date time;
 
+    public TestEntity() {
+    }
+
+    public TestEntity(String name) {
+        this.name = name;
+    }
 }

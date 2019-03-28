@@ -1,26 +1,15 @@
 package com.pazz.springboot.mybatis;
 
-import com.pazz.springboot.mybatis.entity.Login;
-import org.apache.ibatis.reflection.TypeParameterResolver;
-import org.apache.ibatis.reflection.property.PropertyCopier;
+import com.pazz.springboot.mybatis.entity.TestEntity;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-import org.springframework.context.support.ClassPathXmlApplicationContext;
-import org.springframework.context.support.FileSystemXmlApplicationContext;
 import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
-import org.springframework.web.context.support.XmlWebApplicationContext;
 
 import java.io.InputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Type;
-import java.util.List;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -39,23 +28,23 @@ public class SpringbootMybatisApplicationTests {
 //        //spring-web 从一个或多个基于Java的配置类中加载Spring Web应用上下文
 //        ApplicationContext ac5 = new AnnotationConfigWebApplicationContext();
 
-//        InputStream inputStream = SpringbootMybatisApplicationTests.class.getClassLoader().getResourceAsStream("mybatis-config.xml");
-//        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//        SqlSession sqlSession = sessionFactory.openSession();
-//        List<com.pazz.springboot.mybatis.entity.Test> tests = sqlSession.selectList("queryTestList");
-//        System.out.println(tests.size());
+        InputStream inputStream = SpringbootMybatisApplicationTests.class.getClassLoader().getResourceAsStream("mybatis-config.xml");
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sessionFactory.openSession();
+        TestEntity tests = sqlSession.selectOne("queryTestList", new TestEntity("kobe"));
+        System.out.println(tests);
 
-        Field[] fields = Login.class.getDeclaredFields();
-        for (int i = 0; i < fields.length; i++) {
-//            System.out.println(fields[i].getGenericType() + "---" + fields[i].getDeclaringClass());
-            Type type = TypeParameterResolver.resolveFieldType(fields[i], fields[i].getDeclaringClass());
-            System.out.println(type);
-        }
-
-        Login login = new Login("copyName");
-        Login login2 = new Login();
-        PropertyCopier.copyBeanProperties(Login.class, login, login2);
-        System.out.println(login2);
+//        Field[] fields = LoginEntity.class.getDeclaredFields();
+//        for (int i = 0; i < fields.length; i++) {
+////            System.out.println(fields[i].getGenericType() + "---" + fields[i].getDeclaringClass());
+//            Type type = TypeParameterResolver.resolveFieldType(fields[i], fields[i].getDeclaringClass());
+//            System.out.println(type);
+//        }
+//
+//        LoginEntity login = new LoginEntity("copyName");
+//        LoginEntity login2 = new LoginEntity();
+//        PropertyCopier.copyBeanProperties(LoginEntity.class, login, login2);
+//        System.out.println(login2);
 
 
     }

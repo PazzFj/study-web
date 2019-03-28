@@ -5,7 +5,7 @@
 
 <mapper namespace="com.pazz.springboot.mybatis.dao.TestMapper">
 
-    <resultMap id="test" type="com.pazz.springboot.mybatis.entity.Test">
+    <resultMap id="test" type="com.pazz.springboot.mybatis.entity.TestEntity">
         <id column="id" property="id" jdbcType="VARCHAR"></id>
         <result column="name" property="name" jdbcType="VARCHAR"></result>
         <result column="code" property="code" jdbcType="VARCHAR"></result>

@@ -1,13 +1,13 @@
 package com.pazz.springboot.mybatis.serivce.impl;
 
 import com.pazz.springboot.mybatis.dao.LoginMapper;
-import com.pazz.springboot.mybatis.entity.Login;
+import com.pazz.springboot.mybatis.entity.LoginEntity;
 import com.pazz.springboot.mybatis.serivce.ILoginService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.annotation.Resource;
-import javax.transaction.Transactional;
 import java.util.List;
 
 /**
@@ -21,14 +21,14 @@ public class LoginService implements ILoginService {
     @Autowired
     private LoginMapper loginDao;
 
-    public List<Login> queryLoginList(Login login) {
-        List<Login> loginList = loginDao.queryLoginList(login.getUserName());
-        return loginList;
+    public List<LoginEntity> queryLoginList(LoginEntity loginEntity) {
+        List<LoginEntity> loginEntityList = loginDao.queryLoginList(loginEntity.getUserName());
+        return loginEntityList;
     }
 
-    @Transactional
-    public void addLogin(Login login) {
-        System.out.println(login);
-        loginDao.insert(login);
+    @Transactional(propagation = Propagation.REQUIRED)
+    public void addLogin(LoginEntity loginEntity) {
+        System.out.println(loginEntity);
+        loginDao.insert(loginEntity);
     }
 }

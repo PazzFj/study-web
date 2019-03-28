@@ -14,7 +14,7 @@ import java.util.Date;
  */
 @Data
 @Table(name = "t_login")
-public class Login {
+public class LoginEntity {
 
     private String id;
 
@@ -38,14 +38,14 @@ public class Login {
 
     private String active;
 
-    public Login() {
+    public LoginEntity() {
     }
 
-    public Login(String userName) {
+    public LoginEntity(String userName) {
         this.userName = userName;
     }
 
-    public Login(String id, String createUser, Date createTime, String modifyUser, Date modifyTime, String userName, String passWord, int rank, String active) {
+    public LoginEntity(String id, String createUser, Date createTime, String modifyUser, Date modifyTime, String userName, String passWord, int rank, String active) {
         this.id = id;
         this.createUser = createUser;
         this.createTime = createTime;
@@ -59,7 +59,7 @@ public class Login {
 
     @Override
     public String toString() {
-        return "Login{" +
+        return "LoginEntity{" +
                 "id='" + id + '\'' +
                 ", createUser='" + createUser + '\'' +
                 ", createTime=" + createTime +

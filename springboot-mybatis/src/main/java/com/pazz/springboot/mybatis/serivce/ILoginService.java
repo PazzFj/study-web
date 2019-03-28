@@ -1,6 +1,6 @@
 package com.pazz.springboot.mybatis.serivce;
 
-import com.pazz.springboot.mybatis.entity.Login;
+import com.pazz.springboot.mybatis.entity.LoginEntity;
 
 import java.util.List;
 
@@ -11,8 +11,8 @@ import java.util.List;
  */
 public interface ILoginService {
 
-    List<Login> queryLoginList(Login login);
+    List<LoginEntity> queryLoginList(LoginEntity loginEntity);
 
-    void addLogin(Login login);
+    void addLogin(LoginEntity loginEntity);
 
 }

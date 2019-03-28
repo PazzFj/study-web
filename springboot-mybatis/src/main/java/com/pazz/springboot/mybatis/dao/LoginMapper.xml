@@ -5,7 +5,7 @@
 
 <mapper namespace="com.pazz.springboot.mybatis.dao.LoginMapper">
 
-    <resultMap id="login" type="com.pazz.springboot.mybatis.entity.Login">
+    <resultMap id="loginEntity" type="com.pazz.springboot.mybatis.entity.LoginEntity">
         <id column="id" property="id" jdbcType="VARCHAR"></id>
         <result column="create_user" property="createUser" jdbcType="VARCHAR"></result>
         <result column="create_time" property="createTime" jdbcType="TIMESTAMP"></result>
@@ -17,7 +17,7 @@
         <result column="active" property="active" jdbcType="CHAR"></result>
     </resultMap>
 
-    <select id="queryLoginList" resultMap="login">
+    <select id="queryLoginList" resultMap="loginEntity">
         select * from t_login
         <if test="userName != null and '' != userName">
             where user_name = #{userName, jdbcType=VARCHAR}

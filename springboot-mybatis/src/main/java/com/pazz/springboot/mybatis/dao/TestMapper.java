@@ -1,9 +1,8 @@
 package com.pazz.springboot.mybatis.dao;
 
-import com.pazz.springboot.mybatis.entity.Test;
+import com.pazz.springboot.mybatis.entity.TestEntity;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
-import tk.mybatis.mapper.common.Mapper;
 
 import java.util.List;
 
@@ -15,8 +14,8 @@ import java.util.List;
 @Repository
 public interface TestMapper {
 
-    List<Test> queryTestList(@Param("name") String name);
+    List<TestEntity> queryTestList(@Param("name") String name);
 
-    List<Test> selectByIds(@Param("list") List<String> ids);
+    List<TestEntity> selectByIds(@Param("list") List<String> ids);
 
 }
