@@ -17,21 +17,11 @@ import java.util.concurrent.TimeUnit;
  */
 public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V> {
 
-    /**
-     * 日志
-     */
     private final Log log = LogFactory.getLog(getClass());
-    /**
-     * redis cache
-     */
     private RedisTemplate redisTemplate;
-    /**
-     * 默认数据过期时间 10分钟
-     */
     private int expire = 60 * 10;
 
     public RedisCacheStorage() {
-
     }
 
     public boolean set(K key, V value) {

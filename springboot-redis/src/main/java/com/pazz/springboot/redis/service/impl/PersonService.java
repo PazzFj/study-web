@@ -23,7 +23,7 @@ public class PersonService implements IPersonService {
 
     public void addPerson(Person person) {
 //        ICache<String, Person> cache = CacheManager.getInstance().getCache(PersonCache.UUID);
-//        ((PersonCache) ((AbstractRedisCache) cache)).addPerson(person);
+//        ((PersonCache) ((AbstractTestARedisCache) cache)).addPerson(person);
     }
 
 }
