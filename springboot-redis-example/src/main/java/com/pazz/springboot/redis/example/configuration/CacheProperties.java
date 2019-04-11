@@ -11,7 +11,6 @@ import org.springframework.stereotype.Component;
  */
 @Data
 @ConfigurationProperties(prefix = "framework.cache")
-@Component
 public class CacheProperties {
 
     /**

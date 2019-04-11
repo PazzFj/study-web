@@ -7,6 +7,8 @@ import com.pazz.springboot.redis.example.cache.mysql.ICacheProvider;
 import com.pazz.springboot.redis.example.cache.redis.RedisCacheStorage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.data.redis.RedisConnectionFailureException;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
@@ -18,7 +20,7 @@ import java.util.Map;
  * @description:
  */
 @Component
-public abstract class AbstractRedisCache<V> implements ICache<String, V> {
+public abstract class AbstractRedisCache<V> implements ICache<String, V>, InitializingBean {
 
     private final Log LOG = LogFactory.getLog(getClass());
 
@@ -46,14 +48,27 @@ public abstract class AbstractRedisCache<V> implements ICache<String, V> {
             LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]存在，value为null，返回结果[null]");
             return null;
         } catch (KeyIsNotFoundException e) {  //key 不存在
-            LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]存在，value为null，返回结果[null]");
-            return null;
+            value = cacheProvider.get(key);
+            LOG.warn("缓存[" + getUUID() + "]，key[" + key + "]不存在，走数据库查询，返回结果[" + value + "]");
+            if(timeOut > 0){
+                redisCacheStorage.set(getKey(key), value, timeOut);
+            }else {
+                redisCacheStorage.set(getKey(key), value);
+            }
+        } catch (RedisConnectionFailureException e) {
+            value = cacheProvider.get(key);
+            LOG.warn("redis连接出现异常，走数据库查询!");
+            return value;
+        } catch (Exception e) {
+            //其他异常
+            e.printStackTrace();
+            value = cacheProvider.get(key);
         }
-        return null;
+        return value;
     }
 
     public Map<String, V> get() {
-        return null;
+        throw new RuntimeException(getUUID() + ":TTLCache cannot get all!");
     }
 
     public void setCacheProvider(ICacheProvider cacheProvider) {
@@ -62,5 +77,9 @@ public abstract class AbstractRedisCache<V> implements ICache<String, V> {
 
     public void setRedisCacheStorage(RedisCacheStorage<String, V> redisCacheStorage) {
         this.redisCacheStorage = redisCacheStorage;
+    }
+
+    public void afterPropertiesSet() throws Exception {
+        CacheManage.getInstance().registerCacheProvider(this);
     }
 }

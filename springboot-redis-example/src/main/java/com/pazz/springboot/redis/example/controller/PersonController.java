@@ -27,4 +27,9 @@ public class PersonController {
         return personService.findPersonByParam(name);
     }
 
+    @GetMapping("getById")
+    public PersonEntity getByName(@RequestParam("id") int id){
+        return personService.findPersonById(id);
+    }
+
 }

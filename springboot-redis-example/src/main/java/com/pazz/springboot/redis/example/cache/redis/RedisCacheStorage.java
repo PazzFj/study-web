@@ -6,7 +6,6 @@ import com.pazz.springboot.redis.example.cache.exception.ValueIsNullException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.data.redis.core.RedisTemplate;
-import org.springframework.stereotype.Component;
 
 import java.util.concurrent.TimeUnit;
 
@@ -15,7 +14,6 @@ import java.util.concurrent.TimeUnit;
  * @create: 2019/4/11 17:13
  * @description:
  */
-@Component
 public class RedisCacheStorage<K, V> implements ICacheStorage<K, V> {
 
     private final Log log = LogFactory.getLog(getClass());

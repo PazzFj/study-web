@@ -1,10 +1,15 @@
 package com.pazz.springboot.redis.example.service;
 
+import com.pazz.springboot.redis.example.cache.CacheManage;
+import com.pazz.springboot.redis.example.cache.ICache;
+import com.pazz.springboot.redis.example.cache.cache.PersonRedisCache;
 import com.pazz.springboot.redis.example.dao.PersonDao;
 import com.pazz.springboot.redis.example.entity.PersonEntity;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.CacheManager;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -23,7 +28,9 @@ public class PersonService implements IPersonService {
     }
 
     public PersonEntity findPersonById(int id) {
-        return personDao.findPersonById(id);
+        ICache<String, PersonEntity> cache = CacheManage.getInstance().getCache(PersonRedisCache.UUID);
+        PersonEntity entity = cache.get(String.valueOf(id));
+        return entity;
     }
 
 }
