@@ -22,11 +22,6 @@ public class PersonCache extends AbstractRedisCache<Person> {
         return UUID;
     }
 
-//    public void addPerson(Person person) {
-////        String json = JsonUtils.toJson(person);
-//        cacheStorage.set(getKey(person.getPName()), person);
-//    }
-
     @Autowired
     public void setCacheProvider(ICacheProvider<Person> provider) {
         super.setCacheProvider(provider);

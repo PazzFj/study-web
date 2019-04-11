@@ -3,7 +3,7 @@ package com.pazz.springboot.redis.cache;
 /**
  * @author: Peng Jian
  * @create: 2018/11/7 14:42
- * @description: 远程缓存接口
+ * @description: Redis缓存接口
  */
 public interface IRemoteCacheStorage<K, V> {
 
@@ -21,15 +21,5 @@ public interface IRemoteCacheStorage<K, V> {
      * 获取缓存
      */
     V get(K key);
-
-    /**
-     * 删除指定的缓存信息
-     */
-    void remove(K key);
-
-    /**
-     * 删除多个key的缓存信息
-     */
-    void removeMulti(K... keys);
 
 }

@@ -17,7 +17,7 @@ import java.util.Map;
 /**
  * @author: 彭坚
  * @create: 2019/4/4 17:26
- * @description:
+ * @description: 核心处理逻辑类
  */
 public abstract class AbstractTestARedisCache<V> implements ICache<String, V>, InitializingBean {
 
@@ -25,9 +25,9 @@ public abstract class AbstractTestARedisCache<V> implements ICache<String, V>, I
 
     protected int timeOut = 0;
 
-    private ICacheProvider<V> cacheProvider;
+    private ICacheProvider<V> cacheProvider; // mysql 数据库提供者
 
-    private RedisCacheStorage<String, V> cacheStorage;
+    private RedisCacheStorage<String, V> cacheStorage; // redis 数据库提供者
 
     public void setCacheProvider(ICacheProvider cacheProvider) {
         this.cacheProvider = cacheProvider;
@@ -40,6 +40,7 @@ public abstract class AbstractTestARedisCache<V> implements ICache<String, V>, I
     public void setTimeOut(int timeOut) {
         this.timeOut = timeOut;
     }
+
 
     public V get(String key) {
         if (StringUtils.isEmpty(key)) {
@@ -88,18 +89,6 @@ public abstract class AbstractTestARedisCache<V> implements ICache<String, V>, I
 
     public Map<String, V> get() {
         return null;
-    }
-
-    public void invalid() {
-
-    }
-
-    public void invalid(String key) {
-
-    }
-
-    public void invalidMulti(String... keys) {
-
     }
 
     public String getUUID() {

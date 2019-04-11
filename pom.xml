@@ -15,6 +15,7 @@
         <module>springboot-tomcat</module>
         <module>springboot-mongodb</module>
         <module>springboot-redis</module>
+        <module>springboot-redis-example</module>
         <module>springboot-rocketmq</module>
     </modules>
 

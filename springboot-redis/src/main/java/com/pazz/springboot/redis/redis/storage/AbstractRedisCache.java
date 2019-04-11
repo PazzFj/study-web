@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * @author: Peng Jian
  * @create: 2018/11/8 10:30
- * @description: TTL类型的缓存
+ * @description: 核心处理逻辑类
  */
 public abstract class AbstractRedisCache<V> implements ICache<String, V>, InitializingBean, DisposableBean {
 
@@ -70,8 +70,12 @@ public abstract class AbstractRedisCache<V> implements ICache<String, V>, Initia
     }
 
     /**
-     * 获取数据
-     * 如果返回null就是真的没有数据，无需再去数据库再取
+     * 获取缓存步骤：
+     *      1、先从 RedisCacheStorage 中获取值
+     *      2、如果 redis 缓存中返回为null 直接return null
+     *      3、如果 redis 缓存中返回key为null 则从 mysql 数据库中获取 然后在保存到 redis 中
+     *      4、如果 redis 连接失败 则从 mysql 数据库中获取
+     *      5、如果 redis 其它异常, 直接 mysql 获取然后会犯
      */
     public V get(String key) {
         if (StringUtils.isEmpty(key)) {
@@ -113,26 +117,6 @@ public abstract class AbstractRedisCache<V> implements ICache<String, V>, Initia
 
     public Map<String, V> get() {
         throw new RuntimeException(getUUID() + ":TTLCache cannot get all!");
-    }
-
-    public void invalid() {
-        throw new RuntimeException(getUUID() + ":TTLCache cannot invalid all!");
-    }
-
-    public void invalid(String key) {
-        cacheStorage.remove(getKey(key));
-    }
-
-    /**
-     * 失效数据
-     */
-    public void invalidMulti(String... keys) {
-        if (keys == null) return;
-        String[] skeys = new String[keys.length];
-        for (int i = 0; i < keys.length; i++) {
-            skeys[i] = getKey(keys[i]);
-        }
-        cacheStorage.removeMulti(skeys);
     }
 
     public void destroy() {

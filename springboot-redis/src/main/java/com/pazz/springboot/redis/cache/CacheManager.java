@@ -13,7 +13,6 @@ import java.util.concurrent.ConcurrentHashMap;
 public final class CacheManager<K, V> {
 
     private static final CacheManager CACHE_MANAGER = new CacheManager();
-
     /**
      * 保存所有缓存实例
      */

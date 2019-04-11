@@ -13,7 +13,7 @@ import java.util.concurrent.TimeUnit;
 /**
  * @author: Peng Jian
  * @create: 2018/11/8 10:41
- * @description: redis存储
+ * @description: redis存储库
  */
 public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V> {
 
@@ -43,29 +43,23 @@ public class RedisCacheStorage<K, V> implements IRemoteCacheStorage<K, V> {
             throw new CacheRedisException("key does not allow for null!");
         }
         boolean exist = redisTemplate.hasKey(key);
-        if (!exist) {
+        if (!exist) {   // key不存在redis数据库中
             throw new KeyIsNotFoundException("key is not found!");
         }
         log.info("key: " + key);
         Object obj = redisTemplate.opsForValue().get(key);
-        if (obj == null) {
+        if (obj == null) {  //key 存在redis中, 但value为null
             throw new ValueIsNullException("key exists, value is null!");
         }
         return (V) obj;
     }
 
-    public void remove(K key) {
-        redisTemplate.delete(key);
-    }
-
-    public void removeMulti(K... keys) {
-        redisTemplate.delete(keys);
-    }
-
+    //设置redis template 实例
     public void setRedisTemplate(RedisTemplate redisTemplate) {
         this.redisTemplate = redisTemplate;
     }
 
+    //设置失效时间 默认:60*10
     public void setExpire(int expire) {
         this.expire = expire;
     }
