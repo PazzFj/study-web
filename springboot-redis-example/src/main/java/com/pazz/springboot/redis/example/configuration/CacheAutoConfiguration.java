@@ -3,7 +3,8 @@ package com.pazz.springboot.redis.example.configuration;
 import com.pazz.springboot.redis.example.cache.redis.RedisCacheStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -22,7 +23,8 @@ public class CacheAutoConfiguration {
     private CacheProperties properties;
 
     @Bean
-//    @ConditionalOnBean({RedisTemplate.class})
+    @ConditionalOnClass(RedisTemplate.class)
+    @ConditionalOnMissingBean
     public RedisCacheStorage redisCacheStorage(RedisTemplate redisTemplate) {
         RedisCacheStorage redisCacheStorage = new RedisCacheStorage();
         redisCacheStorage.setRedisTemplate(redisTemplate);
