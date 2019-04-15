@@ -10,13 +10,20 @@
     </parameterMap>
 
     <resultMap id="test" type="com.pazz.springboot.mybatis.entity.TestEntity">
-        <id column="id" property="id" jdbcType="VARCHAR"></id>
+        <!--
+        <constructor>
+            <idArg ></idArg>
+        </constructor>
+        <discriminator javaType="" typeHandler="" column=""></discriminator>
+        -->
+        <id column="id" property="id" jdbcType="VARCHAR" ></id>
         <result column="name" property="name" jdbcType="VARCHAR"></result>
         <result column="code" property="code" jdbcType="VARCHAR"></result>
         <result column="time" property="time" jdbcType="TIMESTAMP"></result>
+        <result column="time" property="time" jdbcType="TIMESTAMP" typeHandler="string" javaType="string"></result>
     </resultMap>
 
-    <sql id="testSql">
+    <sql id="testSql" databaseId="testDataBaseId">
         select * from test
     </sql>
 
