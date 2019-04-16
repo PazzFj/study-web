@@ -5,9 +5,13 @@
 
 <mapper namespace="com.pazz.springboot.mybatis.dao.TestMapper">
 
-    <parameterMap id="testP" type="com.pazz.springboot.mybatis.entity.TestEntity">
-        <parameter property=""></parameter>
-    </parameterMap>
+    <cache type="PERPETUAL" eviction="LRU" flushInterval="100" size="1" blocking="false" readOnly="false">
+        <property name="aa" value="bb"></property>
+    </cache>
+
+    <!--<parameterMap id="testP" type="com.pazz.springboot.mybatis.entity.TestEntity">-->
+        <!--<parameter property=""></parameter>-->
+    <!--</parameterMap>-->
 
     <resultMap id="test" type="com.pazz.springboot.mybatis.entity.TestEntity">
         <!--
@@ -20,10 +24,10 @@
         <result column="name" property="name" jdbcType="VARCHAR"></result>
         <result column="code" property="code" jdbcType="VARCHAR"></result>
         <result column="time" property="time" jdbcType="TIMESTAMP"></result>
-        <result column="time" property="time" jdbcType="TIMESTAMP" typeHandler="string" javaType="string"></result>
+        <!--<result column="time" property="time" jdbcType="TIMESTAMP" typeHandler="string" javaType="string"></result>-->
     </resultMap>
 
-    <sql id="testSql" databaseId="testDataBaseId">
+    <sql id="testSql">
         select * from test
     </sql>
 
