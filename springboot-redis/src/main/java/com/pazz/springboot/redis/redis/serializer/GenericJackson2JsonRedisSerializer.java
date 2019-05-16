@@ -21,7 +21,7 @@ import java.io.IOException;
  * Jackson 序列化
  * {@link org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer}
  * 区别在于设置 DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES
- * mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
+ * mapper.configuration(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES,false);
  *
  * @author Peng Jian
  * @create 2018/11/8 21:41

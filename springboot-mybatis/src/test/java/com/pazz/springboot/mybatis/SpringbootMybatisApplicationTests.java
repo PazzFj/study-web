@@ -47,11 +47,11 @@ public class SpringbootMybatisApplicationTests {
 //            e.printStackTrace();
 //        }
 
-//        InputStream inputStream = SpringbootMybatisApplicationTests.class.getClassLoader().getResourceAsStream("mybatis-config.xml");
-//        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
-//        SqlSession sqlSession = sessionFactory.openSession();
-//        TestEntity tests = sqlSession.selectOne("queryTestList", new TestEntity("kobe"));
-//        System.out.println(tests);
+        InputStream inputStream = SpringbootMybatisApplicationTests.class.getClassLoader().getResourceAsStream("mybatis-config.xml");
+        SqlSessionFactory sessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        SqlSession sqlSession = sessionFactory.openSession();
+        TestEntity tests = sqlSession.selectOne("queryTestList", new TestEntity("kobe"));
+        System.out.println(tests);
 
 //        Field[] fields = LoginEntity.class.getDeclaredFields();
 //        for (int i = 0; i < fields.length; i++) {
