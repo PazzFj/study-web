@@ -21,11 +21,9 @@ public abstract class AbstractRocketMQProducer implements RocketMQProducer {
 
     protected final Log log = LogFactory.getLog(getClass());
 
-    private String tag;
-
-    private MQProducer producer;
-
     private String topic;
+    private String tag;
+    private MQProducer producer;
 
     // 同步发送
     @Override
