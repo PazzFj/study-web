@@ -9,7 +9,6 @@ import org.apache.rocketmq.client.consumer.DefaultMQPushConsumer;
 import org.apache.rocketmq.client.consumer.listener.MessageListenerConcurrently;
 import org.apache.rocketmq.client.producer.DefaultMQProducer;
 import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
@@ -32,16 +31,16 @@ import java.util.Map;
 @ConditionalOnClass(DefaultMQProducer.class)
 @EnableConfigurationProperties(RocketMQProperties.class)
 @AutoConfigureAfter({AbstractRocketMQProducer.class, AbstractRocketMQPushConsumer.class})
-public class RocketMQAutoConfiguration implements ApplicationContextAware, InitializingBean {
+public class RocketMQAutoConfiguration implements ApplicationContextAware {
 
     private final Log log = LogFactory.getLog(getClass());
-
-    protected ApplicationContext applicationContext;
 
     @Autowired
     private RocketMQProperties properties;
 
     private DefaultMQProducer producer;
+
+    protected ApplicationContext applicationContext;
 
     @PostConstruct
     public void init() throws Exception {
@@ -50,7 +49,7 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware, Initi
     }
 
     /**
-     * 实例化生产者
+     * 初始化生产者
      * 一个程序无论发送多种消息. 只会有一个producer 提供者
      * 程序在通过发送消息时都是使用同一个Producer  而 这个Producer 实在Configuration中创建被使用
      * 然后配置对应的topic 及tag 在通过对应的方式发送消息
@@ -144,16 +143,9 @@ public class RocketMQAutoConfiguration implements ApplicationContextAware, Initi
         log.info(String.format("%s is ready to subscribe message", bean.getClass().getName()));
     }
 
-    public RocketMQAutoConfiguration() {
-    }
-
     @Override
     public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
         this.applicationContext = applicationContext;
     }
 
-    @Override
-    public void afterPropertiesSet() throws Exception {
-
-    }
 }
