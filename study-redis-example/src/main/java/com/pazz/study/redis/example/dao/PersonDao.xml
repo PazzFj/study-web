@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.pazz.study.redis.example.dao.PersonDao">
+
+    <resultMap id="personEntity" type="com.pazz.study.redis.example.entity.PersonEntity">
+        <id column="id" property="id" jdbcType="NUMERIC"></id>
+        <result column="name" property="name" jdbcType="VARCHAR"></result>
+        <result column="age" property="age" jdbcType="NUMERIC"></result>
+    </resultMap>
+
+    <select id="findPersonByParam" resultMap="personEntity">
+        select * from person
+        <if test="name != null and '' != name">
+            where name = #{name, jdbcType=VARCHAR}
+        </if>
+    </select>
+
+    <select id="findPersonById" resultMap="personEntity">
+        select * from person where id = #{name, jdbcType=NUMERIC}
+    </select>
+
+</mapper>

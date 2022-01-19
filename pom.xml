@@ -3,21 +3,21 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <groupId>com.pazz</groupId>
-    <artifactId>springboot</artifactId>
+    <artifactId>study-web</artifactId>
     <version>1.0.0</version>
     <packaging>pom</packaging>
     <modelVersion>4.0.0</modelVersion>
 
     <modules>
-        <module>springboot-configuration</module>
-        <module>springboot-mybatis</module>
-        <module>springboot-exception-handler</module>
-        <module>springboot-tomcat</module>
-        <module>springboot-mongodb</module>
-        <module>springboot-redis</module>
-        <module>springboot-redis-example</module>
-        <module>springboot-rocketmq</module>
-        <module>springboot-rocketmq-example</module>
+        <module>study-configuration</module>
+        <module>study-mybatis</module>
+        <module>study-exception-handler</module>
+        <module>study-tomcat</module>
+        <module>study-mongodb</module>
+        <module>study-redis</module>
+        <module>study-redis-example</module>
+        <module>study-rocketmq</module>
+        <module>study-rocketmq-example</module>
     </modules>
 
     <properties>
